@@ -1,0 +1,59 @@
+{
+  "list": {
+    "search": "Buscar",
+    "loading-songs": "Cargando temas...",
+    "not-found-songs": "No se encontró ningún tema",
+    "hits": "Temazos",
+    "retro": "Temas retro",
+    "temas": "Temas",
+    "hit-description": "Temas actuales mejor valorados del portal y ordenados por <b>popularidad</b>.<br />Desde el buscador se pueden filtrar por su nombre o autor (<i>autor: Dj Chuckie</i>).",
+    "retro-description": "Temas de más de {0} años ordenados por <b>fecha</b>.<br />Desde el buscador se pueden filtrar por su nombre o autor (<i>autor: Dj Snake</i>).",
+    "amateur-description": "Temas ordenados por <b>fecha</b>.<br />Desde el buscador se pueden filtrar por su nombre o autor (<i>autor: Dj Bliss</i>).",
+    "refreshing": "Actualizando temas...",
+    "header": {
+      "name": "Nombre",
+      "year": "Año",
+      "added": "Añadido",
+      "play": "Audio",
+      "views": "Views",
+      "total-views": "Views totales"
+    }
+  },
+  "menu": {
+    "facebook": "Facebook",
+    "facebook-group": "Grupo Facebook",
+    "general": "General",
+    "breakbeat": "Breakbeat",
+    "home": "Inicio",
+    "contact": "Contacto",
+    "rss": "Redes sociales",
+    "send": "Envíos",
+    "send-song": "Enviar tema",
+    "send-session": "Enviar sesión",
+    "stats": "Estadísticas",
+    "youtube": "Youtube"
+  },
+  "send": {
+    "song": "Enviar tema",
+    "session": "Enviar sesión"
+  },
+  "init": "Inicio",
+  "init-description": "Plataforma de <b>BreakBeat</b> desde el año {0}.<br /><b>¿Eres productor?</b> Regístrate para subir tus temas.",
+  "not-found-msg": "Ups, la página que buscas no existe.",
+  "not-found-title": "Página no encontrada",
+  "human-current-date": "{0}, {1} de {2} del {3}",
+  "date": {
+    "ago": "Hace {0}",
+    "less-minute": "menos de un minuto",
+    "minute": "{0} minuto",
+    "hour": "{0} hora",
+    "day": "{0} día",
+    "month": "{0} mes",
+    "year": "{0} año",
+    "minutes": "{0} minutos",
+    "hours": "{0} horas",
+    "days": "{0} días",
+    "months": "{0} meses",
+    "years": "{0} años"
+  }
+}
