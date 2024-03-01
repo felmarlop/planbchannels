@@ -1,4 +1,6 @@
-# PlanB Channels frontend
+# Plan B Channels frontend
+
+Video player app for m3u8 format
 
 ## Project setup
 ```
@@ -15,9 +17,9 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
+### Deployment
 ```
-npm run lint
+npm run deploy
 ```
 
 ### Customize configuration

@@ -1,11 +1,8 @@
-import { DEFAULT_VIEW_NAME } from '@/config'
-
 const routes = [
-  { path: '/', redirect: { name: DEFAULT_VIEW_NAME } },
   {
-    path: '/inicio',
+    path: '/',
     name: 'inicio',
-    component: () => import('@/views/Init.vue')
+    component: () => import('@/views/Channels.vue')
   }
 ]
 
