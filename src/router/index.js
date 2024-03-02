@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import { BASE_URL } from '@/config'
 
 import routes from './routes'
+console.log(process.env, BASE_URL)
 
 Vue.use(VueRouter)
 

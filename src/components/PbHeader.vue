@@ -3,7 +3,7 @@
     <v-app-bar app color="primary" flat height="80" elevation="5">
       <v-row>
         <v-col cols="2">
-          <v-btn icon small class="ml-2 my-2" @click="drawer = !drawer">
+          <v-btn icon large @click="drawer = !drawer">
             <v-img :src="logo" max-width="45" />
           </v-btn>
         </v-col>
