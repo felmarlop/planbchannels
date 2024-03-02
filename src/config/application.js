@@ -12,7 +12,8 @@ const {
 
 const APP_TITLE = VUE_APP_TITLE
 const DEFAULT_VIEW_NAME = 'inicio'
-const BASE_URL = VUE_APP_BASE_URL || '/'
+// Github has BASE_URL set in gh-pages (process.env.BASE_URL)
+const BASE_URL = process.env.BASE_URL || VUE_APP_BASE_URL || '/'
 const APP_VERSION = pckInfo.version || '0.0.0'
 const API_HOST = VUE_APP_API_HOST || 'localhost:8897'
 const API_BASE_PATH = VUE_APP_API_BASE_PATH || '/api'

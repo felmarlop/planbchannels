@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="2">
           <v-btn icon large @click="drawer = !drawer">
-            <v-img :src="logo" max-width="45" />
+            <v-img :src="Logo" max-width="45" />
           </v-btn>
         </v-col>
         <v-spacer />
@@ -25,7 +25,7 @@
       <v-row>
         <v-col cols="12" align="center">
           <div style="min-height: 190px">
-            <v-img :src="logoTitle" width="140" class="my-5">
+            <v-img :src="LogoTitle" width="140" class="my-5">
               <template #placeholder>
                 <div class="d-flex align-center justify-center fill-height">
                   <v-progress-circular color="tertiary" indeterminate />
@@ -37,7 +37,7 @@
         </v-col>
         <v-col cols="12">
           <v-list-item-group class="text-uppercase">
-            <v-list-item class="pl-10" :to="{ name: 'inicio' }">
+            <v-list-item class="pl-10" :to="{ name: 'channels' }">
               <v-list-item-icon>
                 <v-icon color="tertiary">mdi-playlist-play</v-icon>
               </v-list-item-icon>
@@ -69,8 +69,8 @@ export default {
   name: 'PbHeader',
   data: () => ({
     drawer: null,
-    logo: Logo,
-    logoTitle: LogoTitle
+    Logo,
+    LogoTitle
   }),
   methods: {
     action() {

@@ -1,7 +1,8 @@
 const routes = [
+  { path: '', redirect: { name: 'channels' } },
   {
     path: '/',
-    name: 'inicio',
+    name: 'channels',
     component: () => import('@/views/Channels.vue')
   }
 ]
