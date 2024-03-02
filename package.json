@@ -9,10 +9,11 @@
     "deploy": "sh deploy.sh"
   },
   "dependencies": {
+    "@algoz098/vue-player": "^0.4.3",
     "@babel/eslint-parser": "^7.19.1",
-    "@dongido/vue-viaudio": "^0.3.5",
     "@vue/eslint-config-prettier": "^7.0.0",
     "axios": "^1.2.1",
+    "babel": "^6.23.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-macros": "^3.1.0",
     "core-js": "^3.8.3",

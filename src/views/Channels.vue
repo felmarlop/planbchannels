@@ -19,6 +19,7 @@
               outlined
               class="my-4"
             />
+            <MP4Player :src="selectedLink" :poster="previewImg" v-if="isMP4(selectedLink)" />
             <VideoPlayer
               type="default"
               :link="selectedLink"
@@ -28,16 +29,27 @@
               :is-controls="true"
               :progress="30"
               width="100%"
+              v-else
             />
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
     <v-row v-else>
+      <v-col cols="12">
+        <v-file-input
+          label="Selecciona lista de reproducción M3U"
+          color="tertiary"
+          outlined
+          dense
+          clearable
+          @change="handle($event)"
+        />
+      </v-col>
       <v-col :key="`${index}-${c.link}`" cols="4" sm="2" v-for="(c, index) in channels">
         <v-card color="secondary" rounded hover @click="selectChannel(c)">
           <v-img
-            :src="c.img"
+            :src="c.img || LogoBg"
             aspect-ratio="1"
             contain
             gradient="179deg, rgba(89,94,109,0.00) 55%, #2D303B 100%"
@@ -59,63 +71,30 @@
           </v-img>
         </v-card>
       </v-col>
+      <v-col cols="12" class="text-center pt-16 justify-center" v-if="!channels.length">
+        <span class="text-h5 text-uppercase text--disabled">No hay canales</span>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
 import { VideoPlayer } from 'vue-hls-video-player'
+import MP4Player from '@algoz098/vue-player'
 
+import Logo from '@/assets/img/logo.png'
 import LogoBg from '@/assets/img/logo-title-bg.png'
 
 export default {
   name: 'Inicio',
-  components: { VideoPlayer },
+  components: { MP4Player, VideoPlayer },
   props: {},
   data() {
     return {
       LogoBg,
       url: 'https://www.w3schools.com/html/mov_bbb.mp4',
       selectedChannel: null,
-      selectedLink: null,
-      channels: [
-        {
-          categgory: 'Music',
-          img: 'https://i.imgur.com/7etSMR5.png',
-          link: 'https://ibgrtv.streaming-pro.com/hls/ibgrlive.m3u8',
-          name: 'Ibiza Global TV (720p) [Not 24/7]'
-        },
-        {
-          categgory: 'General',
-          img: 'https://i.imgur.com/BTJvvBK.png',
-          link: 'https://streaming005.gestec-video.com/hls/canal24.m3u8',
-          name: '8 La Marina TV (576p)'
-        },
-        {
-          categgory: 'Music',
-          img: 'https://i.imgur.com/0j5Aget.png',
-          link: 'https://30a-tv.com/feeds/ceftech/30atvmusic.m3u8',
-          name: '30A Music Channel'
-        },
-        {
-          categgory: 'Music',
-          img: 'https://i.imgur.com/wPeT7UL.png',
-          link: 'https://scl.edge.grupoz.cl/music/live/music.m3u8',
-          name: 'PlanetaTV Music (720p)'
-        },
-        {
-          categgory: 'Entertainment',
-          img: 'https://i.imgur.com/HSdwqZN.png',
-          link: 'https://30a-tv.com/sidewalks.m3u8',
-          name: '30A Sidewalks (720p)'
-        },
-        {
-          categgory: 'General',
-          img: 'https://i.imgur.com/TD6ZJoa.png',
-          link: 'https://video03.logicahost.com.br/portaldatropical/portaldatropical/playlist.m3u8',
-          name: 'TV Tropical (720p)'
-        }
-      ]
+      channels: []
     }
   },
   computed: {
@@ -128,15 +107,71 @@ export default {
     },
     previewImg() {
       if (this.selectedChannel && this.selectedChannel.link == this.selectedLink) {
-        return this.selectedChannel.img || LogoBg
+        return this.selectedChannel.img || Logo
       }
-      return LogoBg
+      return Logo
     }
   },
   methods: {
+    isMP4(link) {
+      return link.includes('.mp4')
+    },
     selectChannel(c) {
       this.selectedChannel = c
       this.selectedLink = c?.link || null
+    },
+    handle(f) {
+      const reader = new FileReader()
+      this.channels = []
+      reader.onload = e => {
+        const text = e.target.result
+        const lines = text.split('\n')
+        const len = lines.length
+        let link = null
+        let category = null
+        let img = null
+        let name = null
+        let count = 0
+        for (var i = 0; i < len; i++) {
+          if (lines[i].includes('#EXTINF') && i != len - 1) {
+            link = lines[i + 1]
+          } else {
+            continue
+          }
+          count++
+          // Get name
+          name = lines[i].split(',')
+          if (name.length > 1) {
+            name = name[name.length - 1]
+          } else {
+            name = 'Nombre no disponible'
+          }
+          // Get img
+          img = lines[i].split('logo="')
+          if (img.length > 1) {
+            img = img[1].split('"')[0]
+          } else {
+            img = null
+          }
+          // Get category
+          category = lines[i].split('group-title="')
+          if (category.length > 1) {
+            category = category[1].split('"')[0]
+          } else {
+            category = null
+          }
+          this.channels.push({
+            category: category,
+            img: img,
+            link: link,
+            name: name
+          })
+          if (count == 30) {
+            break
+          }
+        }
+      }
+      reader.readAsText(f)
     }
   }
 }
