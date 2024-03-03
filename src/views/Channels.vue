@@ -1,16 +1,16 @@
 <template>
   <v-container fluid>
     <v-row v-if="selectedChannel">
-      <v-btn class="ml-4" icon @click="selectedChannel = null">
+      <v-btn class="ml-4" icon @click="selectChannel(null)">
         <v-icon color="tertiary">mdi-keyboard-backspace</v-icon>
       </v-btn>
       <v-spacer />
       <v-col cols="12">
         <v-card rounded color="secondary">
           <v-card-text>
-            <span class="text-body-1 font-weight-bold">{{ selectedChannel.name }}</span>
+            <span class="text-body-1 font-weight-bold">{{ channelName }}</span>
             <v-text-field
-              v-model="selectedChannel.link"
+              v-model="selectedLink"
               color="white"
               prepend-inner-icon="mdi-video-outline"
               label="Link del canal"
@@ -21,8 +21,8 @@
             />
             <VideoPlayer
               type="default"
-              :link="selectedChannel.link"
-              :preview-image-link="selectedChannel.img || LogoBg"
+              :link="selectedLink"
+              :preview-image-link="previewImg"
               :is-muted="false"
               :autoplay="true"
               :is-controls="true"
@@ -35,7 +35,7 @@
     </v-row>
     <v-row v-else>
       <v-col :key="`${index}-${c.link}`" cols="6" sm="4" v-for="(c, index) in channels">
-        <v-card color="secondary" rounded hover @click="selectedChannel = c">
+        <v-card color="secondary" rounded hover @click="selectChannel(c)">
           <v-img
             :src="c.img"
             aspect-ratio="1"
@@ -74,12 +74,19 @@ export default {
       LogoBg,
       url: 'https://www.w3schools.com/html/mov_bbb.mp4',
       selectedChannel: null,
+      selectedLink: null,
       channels: [
         {
-          categgory: 'Education',
-          img: 'https://i.imgur.com/XnxPIqn.png',
-          link: 'https://otv3.ocfl.net/VisionTV/smil:VisionTV.smil/playlist.m3u8',
-          name: 'Orange County Vision TV (Orange County FL) (720p)'
+          categgory: 'Music',
+          img: 'https://i.imgur.com/7etSMR5.png',
+          link: 'https://ibgrtv.streaming-pro.com/hls/ibgrlive.m3u8',
+          name: 'Ibiza Global TV (720p) [Not 24/7]'
+        },
+        {
+          categgory: 'General',
+          img: 'https://i.imgur.com/BTJvvBK.png',
+          link: 'https://streaming005.gestec-video.com/hls/canal24.m3u8',
+          name: '8 La Marina TV (576p)'
         },
         {
           categgory: 'Music',
@@ -104,14 +111,29 @@ export default {
           img: 'https://i.imgur.com/TD6ZJoa.png',
           link: 'https://video03.logicahost.com.br/portaldatropical/portaldatropical/playlist.m3u8',
           name: 'TV Tropical (720p)'
-        },
-        {
-          categgory: 'Music',
-          img: 'https://i.imgur.com/sF2g7KE.png',
-          link: 'https://videostream.jpbgdigital.com/NOWTV.m3u8',
-          name: 'Now TV 102.3FM Edmonton (CKNO-FM)'
         }
       ]
+    }
+  },
+  computed: {
+    channelName() {
+      const na = 'Nombre no disponible'
+      if (this.selectedChannel && this.selectedChannel.link == this.selectedLink) {
+        return this.selectedChannel.name || na
+      }
+      return na
+    },
+    previewImg() {
+      if (this.selectedChannel && this.selectedChannel.link == this.selectedLink) {
+        return this.selectedChannel.img || LogoBg
+      }
+      return LogoBg
+    }
+  },
+  methods: {
+    selectChannel(c) {
+      this.selectedChannel = c
+      this.selectedLink = c?.link || null
     }
   }
 }
