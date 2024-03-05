@@ -34,13 +34,13 @@
       </v-col>
     </v-row>
     <v-row v-else>
-      <v-col :key="`${index}-${c.link}`" cols="6" sm="4" v-for="(c, index) in channels">
+      <v-col :key="`${index}-${c.link}`" cols="4" sm="2" v-for="(c, index) in channels">
         <v-card color="secondary" rounded hover @click="selectChannel(c)">
           <v-img
             :src="c.img"
             aspect-ratio="1"
             contain
-            gradient="179deg, rgba(89,94,109,0.00) 78%, #2D303B 100%"
+            gradient="179deg, rgba(89,94,109,0.00) 55%, #2D303B 100%"
             position="center"
             style="padding-bottom: 60px"
             class="px-5"
@@ -50,7 +50,10 @@
                 <v-progress-circular color="tertiary" indeterminate />
               </div>
             </template>
-            <div class="text-caption font-weight-bold text-uppercase" style="position: absolute; bottom: 5%; left: 5%">
+            <div
+              class="text-caption font-weight-bold text-uppercase"
+              style="position: absolute; bottom: 2%; left: 2%; right: 2%"
+            >
               {{ c.name }}
             </div>
           </v-img>
