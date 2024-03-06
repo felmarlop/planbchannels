@@ -9,7 +9,6 @@
     "deploy": "sh deploy.sh"
   },
   "dependencies": {
-    "@algoz098/vue-player": "^0.4.3",
     "@babel/eslint-parser": "^7.19.1",
     "@vue/eslint-config-prettier": "^7.0.0",
     "axios": "^1.2.1",
