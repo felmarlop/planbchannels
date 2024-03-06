@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-app-bar app color="primary" flat height="80" elevation="5">
+    <v-app-bar app flat height="80" elevation="5" style="background: rgba(0, 0, 0, 0.7)">
       <v-row>
         <v-col cols="2">
           <v-btn icon large @click="drawer = !drawer">
@@ -13,8 +13,8 @@
             color="tertiary"
             prepend-inner-icon="mdi-magnify"
             label="Buscar canales"
-            rounded
             dense
+            rounded
             hide-details
             outlined
           />
@@ -37,7 +37,7 @@
         </v-col>
         <v-col cols="12">
           <v-list-item-group class="text-uppercase">
-            <v-list-item class="pl-10" :to="{ name: 'channels' }">
+            <v-list-item class="pl-10" :to="{ name: 'main' }">
               <v-list-item-icon>
                 <v-icon color="tertiary">mdi-playlist-play</v-icon>
               </v-list-item-icon>

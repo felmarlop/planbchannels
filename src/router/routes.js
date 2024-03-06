@@ -1,9 +1,9 @@
 const routes = [
-  { path: '', redirect: { name: 'channels' } },
+  { path: '', redirect: { name: 'main' } },
   {
     path: '/',
-    name: 'channels',
-    component: () => import('@/views/Channels.vue')
+    name: 'main',
+    component: () => import('@/views/Main.vue')
   }
 ]
 
