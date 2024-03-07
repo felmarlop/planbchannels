@@ -11,7 +11,7 @@
         <v-col cols="10" sm="6">
           <v-text-field
             :value="search"
-            :loading="loading"
+            :loading="searching"
             color="tertiary"
             prepend-inner-icon="mdi-magnify"
             label="Buscar canales"
@@ -79,13 +79,13 @@ export default {
     LogoTitle
   }),
   computed: {
-    ...mapGetters('channel', ['search', 'loading'])
+    ...mapGetters('channel', ['search', 'searching'])
   },
   methods: {
-    ...mapActions('channel', ['setSearch', 'setLoading']),
+    ...mapActions('channel', ['setSearch', 'setSearching']),
     debounce,
     handleSearch(v) {
-      this.setLoading(true)
+      this.setSearching(true)
       this.debounceSearch(v)
     },
     debounceSearch: debounce(function (v) {

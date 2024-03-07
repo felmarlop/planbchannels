@@ -1,6 +1,6 @@
 const INIT_STATE = {
   search: '',
-  loading: false,
+  searching: false,
   group: null,
   selected: null
 }
@@ -9,8 +9,8 @@ export default {
   namespaced: true,
   state: { ...INIT_STATE },
   getters: {
-    loading({ loading }) {
-      return loading
+    searching({ searching }) {
+      return searching
     },
     search({ search }) {
       return search
@@ -26,8 +26,8 @@ export default {
     clear({ commit }) {
       commit('clear')
     },
-    setLoading({ commit }, value) {
-      commit('setLoading', value)
+    setSearching({ commit }, value) {
+      commit('setSearching', value)
     },
     setSearch({ commit }, value) {
       commit('setSearch', value)
@@ -43,8 +43,8 @@ export default {
     clear(state) {
       Object.assign(state, INIT_STATE)
     },
-    setLoading(state, value) {
-      state.loading = value
+    setSearching(state, value) {
+      state.searching = value
     },
     setSearch(state, value) {
       state.search = value

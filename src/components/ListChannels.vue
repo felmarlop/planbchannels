@@ -22,7 +22,7 @@
     </v-list-item>
     <v-row v-if="groupChannels.length > CHANNEL_LIMIT && !all">
       <v-spacer />
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="4">
         <v-btn rounded width="100%" @click="$emit('more', group)">
           <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
           <span class="text-caption">Ver más</span>

@@ -1,16 +1,20 @@
 <template>
   <v-container fluid>
     <v-row v-if="selectedChannel">
-      <v-btn icon @click="setSelected(null)">
-        <v-icon color="tertiary">mdi-keyboard-backspace</v-icon>
-      </v-btn>
-      <v-spacer />
+      <v-col cols="12" class="pb-0">
+        <v-toolbar color="transparent" class="px-2">
+          <v-spacer />
+          <v-btn icon outlined color="tertiary" @click="setSelected(null)">
+            <v-icon>mdi-keyboard-backspace</v-icon>
+          </v-btn>
+        </v-toolbar>
+      </v-col>
       <v-col cols="12">
         <pb-player :channel="selectedChannel" />
       </v-col>
     </v-row>
     <v-row v-else>
-      <v-col cols="12">
+      <!-- <v-col cols="12">
         <v-file-input
           label="Lista de reproducción M3U"
           color="tertiary"
@@ -20,14 +24,19 @@
           clearable
           @change="handleFile($event)"
         />
-      </v-col>
+      </v-col> -->
       <v-col :key="g" cols="12" v-for="g in sortedGroupNames">
-        <v-toolbar-title class="group-title text-h6 font-weight-bold pb-1">
-          <v-btn class="mr-2" icon @click="setGroup(null)" v-if="selectedGroup">
-            <v-icon color="tertiary">mdi-keyboard-backspace</v-icon>
+        <v-toolbar color="transparent" class="px-2">
+          <v-toolbar-title class="group-title text-h6 font-weight-bold mr-2">
+            {{ `${g} (${groups[g] || 0})` }}
+          </v-toolbar-title>
+          <v-spacer />
+          <v-btn outlined icon color="tertiary" @click="selectedGroup ? setGroup(null) : openGroup(g)">
+            <v-icon>
+              {{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}
+            </v-icon>
           </v-btn>
-          {{ `${g} (${groups[g] || 0})` }}
-        </v-toolbar-title>
+        </v-toolbar>
         <list-channels
           :channels="filteredChannels"
           :group="g"
@@ -51,7 +60,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 import { ListChannels, PbPlayer } from '@/components'
-import { getFileData } from '@/helpers/utils'
+import { getFileData, getURLData } from '@/helpers/utils'
 
 export default {
   name: 'MainView',
@@ -71,11 +80,12 @@ export default {
     filteredChannels() {
       let chs = this.channels
       if (this.search) {
+        const s = this.search.toLowerCase()
         chs = this.channels.filter(c => {
-          return c.name.toLowerCase().includes(this.search) || c.group.toLowerCase().includes(this.search)
+          return ['group', 'name'].some(p => c[p].toLowerCase().includes(s))
         })
       }
-      this.setLoading(false)
+      this.setSearching(false)
       return chs
     },
     groups() {
@@ -98,16 +108,27 @@ export default {
       return Object.keys(this.groups).sort()
     }
   },
+  created() {
+    this.loading = true
+    getURLData('https://iptv-org.github.io/iptv/languages/spa.m3u', chs => {
+      this.channels = chs
+      this.loading = false
+    })
+  },
   methods: {
-    ...mapActions('channel', ['clear', 'setSelected', 'setGroup', 'setLoading']),
+    ...mapActions('channel', ['clear', 'setSelected', 'setGroup', 'setSearching', 'setSearch']),
     handleFile(f) {
       this.clear()
       this.channels = []
       this.loading = true
-      getFileData(f, ch => {
-        this.channels = ch
+      getFileData(f, chs => {
+        this.channels = chs
         this.loading = false
       })
+    },
+    openGroup(g) {
+      this.setSearch('')
+      this.setGroup(g)
     }
   }
 }
