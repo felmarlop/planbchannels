@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row v-if="selectedChannel">
-      <v-btn icon @click="selectedChannel = null">
+      <v-btn icon @click="setSelected(null)">
         <v-icon color="tertiary">mdi-keyboard-backspace</v-icon>
       </v-btn>
       <v-spacer />
@@ -23,22 +23,24 @@
       </v-col>
       <v-col :key="g" cols="12" v-for="g in sortedGroupNames">
         <v-toolbar-title class="group-title text-h6 font-weight-bold pb-1">
-          <v-btn class="mr-2" icon @click="selectedGroup = null" v-if="selectedGroup">
+          <v-btn class="mr-2" icon @click="setGroup(null)" v-if="selectedGroup">
             <v-icon color="tertiary">mdi-keyboard-backspace</v-icon>
           </v-btn>
-          {{ `${g} (${groups[g]})` }}
+          {{ `${g} (${groups[g] || 0})` }}
         </v-toolbar-title>
         <list-channels
           :channels="filteredChannels"
           :group="g"
           :all="selectedGroup != null"
-          @more="selectedGroup = $event || null"
-          @select="selectedChannel = $event"
+          @more="setGroup($event || null)"
+          @select="setSelected($event)"
         />
       </v-col>
       <v-col cols="12" class="text-center pt-16 justify-center" v-if="!sortedGroupNames.length">
         <span class="text-body-1 text-uppercase text--disabled">
-          {{ loading ? 'Cargando canales...' : 'No hay canales' }}
+          {{
+            loading ? 'Cargando canales...' : search && channels.length ? 'No se encuentran canales' : 'No hay canales'
+          }}
         </span>
       </v-col>
     </v-row>
@@ -46,6 +48,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 import { ListChannels, PbPlayer } from '@/components'
 import { getFileData } from '@/helpers/utils'
 
@@ -55,17 +59,24 @@ export default {
   data() {
     return {
       loading: false,
-      selectedGroup: null,
-      selectedChannel: null,
-      search: '',
       channels: []
     }
   },
   computed: {
+    ...mapGetters('channel', {
+      search: 'search',
+      selectedChannel: 'selected',
+      selectedGroup: 'group'
+    }),
     filteredChannels() {
-      return this.channels.filter(c => {
-        return c.name.toLowerCase().startsWith(this.search)
-      })
+      let chs = this.channels
+      if (this.search) {
+        chs = this.channels.filter(c => {
+          return c.name.toLowerCase().includes(this.search) || c.group.toLowerCase().includes(this.search)
+        })
+      }
+      this.setLoading(false)
+      return chs
     },
     groups() {
       let res = {}
@@ -88,10 +99,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions('channel', ['clear', 'setSelected', 'setGroup', 'setLoading']),
     handleFile(f) {
+      this.clear()
       this.channels = []
-      this.selectedChannel = null
-      this.selectedGroup = null
       this.loading = true
       getFileData(f, ch => {
         this.channels = ch

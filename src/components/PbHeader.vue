@@ -10,6 +10,8 @@
         <v-spacer />
         <v-col cols="10" sm="6">
           <v-text-field
+            :value="search"
+            :loading="loading"
             color="tertiary"
             prepend-inner-icon="mdi-magnify"
             label="Buscar canales"
@@ -17,6 +19,7 @@
             rounded
             hide-details
             outlined
+            @input="handleSearch($event)"
           />
         </v-col>
       </v-row>
@@ -62,6 +65,9 @@
   </v-container>
 </template>
 <script>
+import { debounce } from 'lodash'
+import { mapActions, mapGetters } from 'vuex'
+
 import Logo from '@/assets/img/logo.png'
 import LogoTitle from '@/assets/img/logo-title.png'
 
@@ -72,7 +78,19 @@ export default {
     Logo,
     LogoTitle
   }),
+  computed: {
+    ...mapGetters('channel', ['search', 'loading'])
+  },
   methods: {
+    ...mapActions('channel', ['setSearch', 'setLoading']),
+    debounce,
+    handleSearch(v) {
+      this.setLoading(true)
+      this.debounceSearch(v)
+    },
+    debounceSearch: debounce(function (v) {
+      this.setSearch(v)
+    }, 400),
     action() {
       return false
     }
