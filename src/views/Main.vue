@@ -1,14 +1,6 @@
 <template>
   <v-container fluid>
     <v-row v-if="selectedChannel">
-      <v-col cols="12" class="pb-0">
-        <v-toolbar color="transparent" class="px-2">
-          <v-spacer />
-          <v-btn icon outlined color="tertiary" @click="setSelected(null)">
-            <v-icon>mdi-keyboard-backspace</v-icon>
-          </v-btn>
-        </v-toolbar>
-      </v-col>
       <v-col cols="12">
         <pb-player :channel="selectedChannel" />
       </v-col>
@@ -26,15 +18,19 @@
         />
       </v-col> -->
       <v-col :key="g" cols="12" v-for="g in sortedGroupNames">
-        <v-toolbar color="transparent" class="px-2">
-          <v-toolbar-title class="group-title text-h6 font-weight-bold mr-2">
+        <v-toolbar color="transparent" class="pr-2">
+          <v-toolbar-title class="group-title text-h6 font-weight-bold">
             {{ `${g} (${groups[g] || 0})` }}
           </v-toolbar-title>
           <v-spacer />
-          <v-btn outlined icon color="tertiary" @click="selectedGroup ? setGroup(null) : openGroup(g)">
-            <v-icon>
-              {{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}
-            </v-icon>
+          <v-btn
+            :outlined="!selectedGroup"
+            icon
+            small
+            color="tertiary"
+            @click="selectedGroup ? setGroup(null) : openGroup(g)"
+          >
+            <v-icon>{{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}</v-icon>
           </v-btn>
         </v-toolbar>
         <list-channels

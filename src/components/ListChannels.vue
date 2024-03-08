@@ -1,8 +1,8 @@
 <template>
-  <v-list color="primary" rounded lines="three" class="px-0">
+  <v-list color="primary" lines="three" class="px-0">
     <v-list-item
       :key="`${index}-${c.link}`"
-      class="channel mb-3"
+      class="channel mb-3 rounded-lg"
       @click="$emit('select', c)"
       v-for="(c, index) in chunk"
     >
@@ -21,8 +21,7 @@
       </v-list-item-content>
     </v-list-item>
     <v-row v-if="groupChannels.length > CHANNEL_LIMIT && !all">
-      <v-spacer />
-      <v-col cols="12" md="4">
+      <v-col cols="12">
         <v-btn rounded width="100%" @click="$emit('more', group)">
           <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
           <span class="text-caption">Ver más</span>

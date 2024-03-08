@@ -1,12 +1,20 @@
 <template>
   <v-card rounded color="secondary">
-    <v-card-title class="pb-0 text-h6 font-weight-bold">{{ channelName }}</v-card-title>
-    <v-card-text>
+    <v-card-title>
+      <v-row>
+        <v-col cols="auto" class="py-1">
+          <v-btn icon small color="tertiary" @click="setSelected(null)">
+            <v-icon>mdi-keyboard-backspace</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="10" class="text-body-1 font-weight-bold">{{ channelName }}</v-col>
+      </v-row>
+    </v-card-title>
+    <v-card-text class="text-body-1">
       <div class="error-message" v-if="error">
         <v-icon class="mb-1" color="rgb(255, 131, 43)">mdi-alert</v-icon>
-        <p class="text-body-1">Ups! Canal no disponible en estos momentos.</p>
+        <p>Ups! Canal no disponible en estos momentos.</p>
       </div>
-      <v-text-field disabled :value="channel.link" class="py-0" />
       <video
         :src="channel.link"
         :muted="false"
@@ -34,6 +42,7 @@
   </v-card>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import { VideoPlayer as HlsPlayer } from 'vue-hls-video-player'
 
 import Logo from '@/assets/img/logo.png'
@@ -68,6 +77,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('channel', ['setSelected']),
     isVideo,
     action() {
       return false

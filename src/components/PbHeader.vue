@@ -14,11 +14,12 @@
             :loading="searching"
             color="tertiary"
             prepend-inner-icon="mdi-magnify"
-            label="Buscar canales"
+            label="Buscar"
             dense
             rounded
             hide-details
             outlined
+            clearable
             @input="handleSearch($event)"
           />
         </v-col>
