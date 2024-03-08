@@ -1,20 +1,19 @@
 <template>
-  <v-card rounded color="secondary">
-    <v-card-title>
-      <v-row>
-        <v-col cols="auto" class="py-1">
-          <v-btn icon small color="tertiary" @click="setSelected(null)">
-            <v-icon>mdi-keyboard-backspace</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="10" class="text-body-1 font-weight-bold">{{ channelName }}</v-col>
-      </v-row>
-    </v-card-title>
-    <v-card-text class="text-body-1">
-      <div class="error-message" v-if="error">
-        <v-icon class="mb-1" color="rgb(255, 131, 43)">mdi-alert</v-icon>
-        <p>Ups! Canal no disponible en estos momentos.</p>
-      </div>
+  <v-row>
+    <div class="error-message" v-if="error">
+      <v-icon class="mb-1" color="rgb(255, 131, 43)">mdi-alert</v-icon>
+      <p>Ups! Canal no disponible en estos momentos.</p>
+    </div>
+    <v-col cols="12">
+      <v-toolbar color="transparent" class="pr-2">
+        <v-toolbar-title class="text-body-1 font-weight-bold pr-2">
+          {{ channelName }}
+        </v-toolbar-title>
+        <v-spacer />
+        <v-btn icon small color="tertiary" @click="setSelected(null)">
+          <v-icon>mdi-keyboard-backspace</v-icon>
+        </v-btn>
+      </v-toolbar>
       <video
         :src="channel.link"
         :muted="false"
@@ -38,15 +37,14 @@
         @error="error = true"
         v-else
       />
-    </v-card-text>
-  </v-card>
+    </v-col>
+  </v-row>
 </template>
 <script>
 import { mapActions } from 'vuex'
 import { VideoPlayer as HlsPlayer } from 'vue-hls-video-player'
 
-import Logo from '@/assets/img/logo.png'
-import LogoTitle from '@/assets/img/logo-title.png'
+import LogoBg from '@/assets/img/logo-bg.png'
 import { isVideo } from '@/helpers/utils'
 
 export default {
@@ -59,8 +57,7 @@ export default {
     }
   },
   data: () => ({
-    Logo,
-    LogoTitle,
+    LogoBg,
     error: false
   }),
   computed: {
@@ -68,7 +65,7 @@ export default {
       return this.channel.name || 'Nombre no disponible'
     },
     previewImg() {
-      return this.channel.img || Logo
+      return this.channel.img || LogoBg
     }
   },
   watch: {
@@ -97,5 +94,8 @@ div.error-message {
   background: rgba(0, 0, 0, 0.7);
   color: rgb(255, 131, 43);
   border-radius: 10px;
+}
+video {
+  min-height: 300px;
 }
 </style>

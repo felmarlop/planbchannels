@@ -18,21 +18,7 @@
         />
       </v-col> -->
       <v-col :key="g" cols="12" v-for="g in sortedGroupNames">
-        <v-toolbar color="transparent" class="pr-2">
-          <v-toolbar-title class="group-title text-h6 font-weight-bold">
-            {{ `${g} (${groups[g] || 0})` }}
-          </v-toolbar-title>
-          <v-spacer />
-          <v-btn
-            :outlined="!selectedGroup"
-            icon
-            small
-            color="tertiary"
-            @click="selectedGroup ? setGroup(null) : openGroup(g)"
-          >
-            <v-icon>{{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}</v-icon>
-          </v-btn>
-        </v-toolbar>
+        <list-channels-title :group="g" :count="groups[g]" />
         <list-channels
           :channels="filteredChannels"
           :group="g"
@@ -55,12 +41,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
-import { ListChannels, PbPlayer } from '@/components'
+import { ListChannels, ListChannelsTitle, PbPlayer } from '@/components'
 import { getFileData, getURLData } from '@/helpers/utils'
 
 export default {
   name: 'MainView',
-  components: { ListChannels, PbPlayer },
+  components: { ListChannels, ListChannelsTitle, PbPlayer },
   data() {
     return {
       loading: false,
@@ -112,7 +98,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions('channel', ['clear', 'setSelected', 'setGroup', 'setSearching', 'setSearch']),
+    ...mapActions('channel', ['clear', 'setSelected', 'setGroup', 'setSearching']),
     handleFile(f) {
       this.clear()
       this.channels = []
@@ -121,10 +107,6 @@ export default {
         this.channels = chs
         this.loading = false
       })
-    },
-    openGroup(g) {
-      this.setSearch('')
-      this.setGroup(g)
     }
   }
 }
