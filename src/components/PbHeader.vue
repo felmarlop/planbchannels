@@ -12,6 +12,7 @@
           <v-text-field
             :value="search"
             :loading="searching"
+            :disabled="!list.length"
             color="tertiary"
             prepend-inner-icon="mdi-magnify"
             label="Buscar"
@@ -39,27 +40,13 @@
           </div>
           <v-divider />
         </v-col>
-        <v-col cols="12">
-          <v-list-item-group class="text-uppercase">
-            <v-list-item class="pl-10" :to="{ name: 'main' }">
-              <v-list-item-icon>
-                <v-icon color="tertiary">mdi-playlist-play</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>Canales</v-list-item-title>
+        <v-col cols="12" class="text-uppercase text-caption py-0">
+          <v-list two-line>
+            <v-list-item class="pl-10" @click="emptyList()">
+              <v-icon color="tertiary" class="mr-5">mdi-playlist-play</v-icon>
+              <v-list-item-title>Nueva playlist</v-list-item-title>
             </v-list-item>
-            <v-list-item class="pl-10" @click="action()">
-              <v-list-item-icon>
-                <v-icon color="tertiary">mdi-checkbox-multiple-blank</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>Categorías</v-list-item-title>
-            </v-list-item>
-            <v-list-item class="pl-10" @click="action()">
-              <v-list-item-icon>
-                <v-icon color="tertiary">mdi-monitor-cellphone</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>Dispositivo</v-list-item-title>
-            </v-list-item>
-          </v-list-item-group>
+          </v-list>
         </v-col>
       </v-row>
     </v-navigation-drawer>
@@ -76,14 +63,15 @@ export default {
   name: 'PbHeader',
   data: () => ({
     drawer: null,
+    view: null,
     Logo,
     LogoTitle
   }),
   computed: {
-    ...mapGetters('channel', ['search', 'searching'])
+    ...mapGetters('channel', ['search', 'searching', 'list'])
   },
   methods: {
-    ...mapActions('channel', ['setSearch', 'setSearching']),
+    ...mapActions('channel', ['clear', 'setSearch', 'setSearching']),
     debounce,
     handleSearch(v) {
       this.setSearching(true)
@@ -92,6 +80,10 @@ export default {
     debounceSearch: debounce(function (v) {
       this.setSearch(v)
     }, 400),
+    emptyList() {
+      this.clear()
+      this.drawer = false
+    },
     action() {
       return false
     }

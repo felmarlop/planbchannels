@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 // Check if the URL is a video with the following formats
 export function isVideo(channel) {
   return ['.mkv', '.mp4'].some(f => channel.link.includes(f))
@@ -19,9 +20,14 @@ export function getURLData(uri, cb) {
   if (!uri) {
     return cb([])
   }
-  axios.get(uri).then(r => {
-    cb(_getChannelsFromText(r.data || ''))
-  })
+  axios
+    .get(uri)
+    .then(r => {
+      cb(_getChannelsFromText(r.data || ''))
+    })
+    .catch(() => {
+      cb([])
+    })
 }
 
 function _getChannelsFromText(text) {

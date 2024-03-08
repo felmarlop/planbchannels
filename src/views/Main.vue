@@ -5,18 +5,7 @@
         <pb-player :channel="selectedChannel" />
       </v-col>
     </v-row>
-    <v-row v-else>
-      <!-- <v-col cols="12">
-        <v-file-input
-          label="Lista de reproducción M3U"
-          color="tertiary"
-          hide-details
-          outlined
-          dense
-          clearable
-          @change="handleFile($event)"
-        />
-      </v-col> -->
+    <v-row justify="center" v-else>
       <v-col :key="g" cols="12" v-for="g in sortedGroupNames">
         <list-channels-title :group="g" :count="groups[g]" />
         <list-channels
@@ -27,11 +16,10 @@
           @select="setSelected($event)"
         />
       </v-col>
-      <v-col cols="12" class="text-center pt-16 justify-center" v-if="!sortedGroupNames.length">
+      <load-channels v-if="!channels.length" />
+      <v-col cols="12" class="text-center pt-16" v-else-if="!sortedGroupNames.length">
         <span class="text-body-1 text-uppercase text--disabled">
-          {{
-            loading ? 'Cargando canales...' : search && channels.length ? 'No se encuentran canales' : 'No hay canales'
-          }}
+          {{ notFoundMessage }}
         </span>
       </v-col>
     </v-row>
@@ -41,23 +29,19 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
-import { ListChannels, ListChannelsTitle, PbPlayer } from '@/components'
-import { getFileData, getURLData } from '@/helpers/utils'
+import { ListChannels, ListChannelsTitle, LoadChannels, PbPlayer } from '@/components'
 
 export default {
   name: 'MainView',
-  components: { ListChannels, ListChannelsTitle, PbPlayer },
-  data() {
-    return {
-      loading: false,
-      channels: []
-    }
-  },
+  components: { ListChannels, ListChannelsTitle, LoadChannels, PbPlayer },
   computed: {
     ...mapGetters('channel', {
+      url: 'url',
+      channels: 'list',
       search: 'search',
-      selectedChannel: 'selected',
-      selectedGroup: 'group'
+      loading: 'loading',
+      selectedGroup: 'group',
+      selectedChannel: 'selected'
     }),
     filteredChannels() {
       let chs = this.channels
@@ -88,26 +72,13 @@ export default {
         return [this.selectedGroup]
       }
       return Object.keys(this.groups).sort()
+    },
+    notFoundMessage() {
+      return this.loading ? 'Cargando canales...' : 'Canal no encontrado'
     }
-  },
-  created() {
-    this.loading = true
-    getURLData('https://iptv-org.github.io/iptv/languages/spa.m3u', chs => {
-      this.channels = chs
-      this.loading = false
-    })
   },
   methods: {
-    ...mapActions('channel', ['clear', 'setSelected', 'setGroup', 'setSearching']),
-    handleFile(f) {
-      this.clear()
-      this.channels = []
-      this.loading = true
-      getFileData(f, chs => {
-        this.channels = chs
-        this.loading = false
-      })
-    }
+    ...mapActions('channel', ['setSelected', 'setGroup', 'setSearching'])
   }
 }
 </script>

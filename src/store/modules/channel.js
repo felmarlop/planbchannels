@@ -1,14 +1,25 @@
 const INIT_STATE = {
+  list: [],
   search: '',
   searching: false,
+  loading: false,
   group: null,
   selected: null
 }
 
 export default {
   namespaced: true,
-  state: { ...INIT_STATE },
+  state: {
+    url: 'https://iptv-org.github.io/iptv/languages/spa.m3u',
+    ...INIT_STATE
+  },
   getters: {
+    list({ list }) {
+      return list
+    },
+    loading({ loading }) {
+      return loading
+    },
     searching({ searching }) {
       return searching
     },
@@ -20,11 +31,20 @@ export default {
     },
     selected({ selected }) {
       return selected
+    },
+    url({ url }) {
+      return url
     }
   },
   actions: {
     clear({ commit }) {
       commit('clear')
+    },
+    setList({ commit }, value) {
+      commit('setList', value)
+    },
+    setLoading({ commit }, value) {
+      commit('setLoading', value)
     },
     setSearching({ commit }, value) {
       commit('setSearching', value)
@@ -37,11 +57,20 @@ export default {
     },
     setGroup({ commit }, value) {
       commit('setGroup', value)
+    },
+    setUrl({ commit }, value) {
+      commit('setUrl', value)
     }
   },
   mutations: {
     clear(state) {
       Object.assign(state, INIT_STATE)
+    },
+    setList(state, value) {
+      state.list = value
+    },
+    setLoading(state, value) {
+      state.loading = value
     },
     setSearching(state, value) {
       state.searching = value
@@ -54,6 +83,9 @@ export default {
     },
     setGroup(state, value) {
       state.group = value
+    },
+    setUrl(state, value) {
+      state.url = value
     }
   }
 }
