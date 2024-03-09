@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row justify="center" v-else>
-      <v-col :key="g" cols="12" v-for="g in sortedGroupNames">
+      <v-col :key="g" cols="12" class="py-0" v-for="g in sortedGroupNames">
         <list-channels-title :group="g" :count="groups[g]" />
         <list-channels
           :channels="filteredChannels"

@@ -3,9 +3,7 @@
     <v-app-bar app flat height="80" elevation="5" style="background: rgba(0, 0, 0, 0.7)">
       <v-row>
         <v-col cols="2">
-          <v-btn icon large @click="drawer = !drawer">
-            <v-img :src="Logo" max-width="45" />
-          </v-btn>
+          <v-img :src="Logo" max-width="45" style="cursor: pointer" @click="drawer = !drawer" />
         </v-col>
         <v-spacer />
         <v-col cols="10" sm="6">
@@ -15,10 +13,11 @@
             :disabled="!list.length"
             color="tertiary"
             prepend-inner-icon="mdi-magnify"
+            class="rounded-lg"
             label="Buscar"
+            :hint="list.length ? `${list.length} canales/vídeos` : ''"
+            persistent-hint
             dense
-            rounded
-            hide-details
             outlined
             clearable
             @input="handleSearch($event)"
@@ -43,7 +42,7 @@
         <v-col cols="12" class="text-uppercase text-caption py-0">
           <v-list two-line>
             <v-list-item class="pl-10" @click="emptyList()">
-              <v-icon color="tertiary" class="mr-5">mdi-playlist-play</v-icon>
+              <v-icon color="tertiary" class="mr-5">mdi-playlist-plus</v-icon>
               <v-list-item-title>Nueva playlist</v-list-item-title>
             </v-list-item>
           </v-list>

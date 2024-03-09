@@ -32,7 +32,7 @@
         :is-muted="false"
         :autoplay="true"
         :is-controls="true"
-        :progress="30"
+        :progress="0"
         width="100%"
         @error="error = true"
         v-else
