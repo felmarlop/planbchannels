@@ -27,7 +27,7 @@
           </v-col>
           <v-col cols="12" class="text-center pt-5">
             <p width="100%">
-              Plan B Channels sólo descarga y reproduce el contenido de tu playlist. No hace peticiones a ningun
+              Plan B Channels sólo descarga y reproduce el contenido de tu playlist. No hace peticiones a ningún
               servidor ni guarda información sobre la lista de canales.
             </p>
           </v-col>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       uri: '',
-      document
+      errorMessage: 'Ups! No se encontró ningún canal.'
     }
   },
   computed: {
@@ -60,20 +60,29 @@ export default {
     this.uri = this.url
   },
   methods: {
+    ...mapActions('alert', ['setMessage']),
     ...mapActions('channel', ['setList', 'setUrl', 'setLoading']),
     handleURL(u) {
       this.setUrl(u)
       this.setLoading(true)
       getURLData(this.url, chs => {
-        this.setList(chs)
         this.setLoading(false)
+        if (chs.length) {
+          this.setList(chs)
+        } else {
+          this.setMessage(this.errorMessage)
+        }
       })
     },
     handleFile(e) {
       this.setLoading(true)
       getFileData(e.target.files[0], chs => {
-        this.setList(chs)
         this.setLoading(false)
+        if (chs.length) {
+          this.setList(chs)
+        } else {
+          this.setMessage(this.errorMessage)
+        }
       })
     }
   }

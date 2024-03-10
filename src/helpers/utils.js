@@ -43,12 +43,16 @@ function _getChannelsFromText(text) {
     } else {
       continue
     }
-    channels.push({
-      group: _getGroupFromLine(line),
-      img: _getImageLinkFromLine(line),
-      link: link,
-      name: _getNameFromLine(line)
-    })
+    try {
+      channels.push({
+        group: _getGroupFromLine(line),
+        img: _getImageLinkFromLine(line),
+        link: link,
+        name: _getNameFromLine(line)
+      })
+    } catch {
+      continue
+    }
   }
   channels.sort((a, b) => {
     return a.name < b.name

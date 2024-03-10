@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <alert />
     <Pb-Header />
     <v-main color="primary">
       <router-view />
@@ -9,11 +10,12 @@
 </template>
 
 <script>
-import { PbHeader, PbFooter } from '@/components'
+import { Alert, PbHeader, PbFooter } from '@/components'
 
 export default {
   name: 'App',
   components: {
+    Alert,
     PbHeader,
     PbFooter
   }

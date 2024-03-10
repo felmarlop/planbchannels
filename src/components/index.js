@@ -1,3 +1,4 @@
+export { default as Alert } from './Alert.vue'
 export { default as ListChannels } from './ListChannels.vue'
 export { default as ListChannelsTitle } from './ListChannelsTitle.vue'
 export { default as LoadChannels } from './LoadChannels.vue'
