@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // Check if the URL is a video with the following formats
-export function isVideo(channel) {
-  return ['.mkv', '.mp4'].some(f => channel.link.includes(f))
+export function isStreaming(channel) {
+  return !['.avi', '.mkv', '.mp4', '.mpeg', '.ogv', '.webm', '.3gp', '.3g2'].some(f => channel.link.includes(f))
 }
 // Get channels from a file
 export function getFileData(f, cb) {
@@ -60,7 +60,7 @@ function _getNameFromLine(line) {
   let splits = line.split(',')
   if (splits.length > 1) {
     return splits[splits.length - 1]
-  } 
+  }
   splits = line.split('tvg-name="')
   if (splits.length > 1) {
     return splits[1].split('"')[0]

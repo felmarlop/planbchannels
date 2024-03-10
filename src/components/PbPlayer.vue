@@ -15,41 +15,31 @@
         </v-btn>
       </v-toolbar>
       <video
+        ref="VideoPlayer"
         :src="channel.link"
         :muted="false"
-        :autoplay="true"
-        :controls="true"
         :loop="false"
         :poster="previewImg"
         width="100%"
+        autoplay
+        controls
         @error="error = true"
-        v-if="isVideo(channel)"
-      />
-      <HlsPlayer
-        type="default"
-        :link="channel.link"
-        :preview-image-link="previewImg"
-        :is-muted="false"
-        :autoplay="true"
-        :is-controls="true"
-        :progress="0"
-        width="100%"
-        @error="error = true"
-        v-else
-      />
+      >
+        <source :src="channel.link" :type="isStreaming(channel) ? 'application/x-mpegURL' : 'video/mp4'" />
+      </video>
     </v-col>
   </v-row>
 </template>
 <script>
+import Hls from 'hls.js'
 import { mapActions } from 'vuex'
-import { VideoPlayer as HlsPlayer } from 'vue-hls-video-player'
 
 import LogoBg from '@/assets/img/logo-bg.png'
-import { isVideo } from '@/helpers/utils'
+import { isStreaming } from '@/helpers/utils'
 
 export default {
   name: 'PbPlayer',
-  components: { HlsPlayer },
+  components: {},
   props: {
     channel: {
       type: Object,
@@ -69,13 +59,29 @@ export default {
     }
   },
   watch: {
-    selectedChannel() {
+    channel() {
       this.error = false
+      if (isStreaming(this.channel)) {
+        this.prepareVideoPlayer()
+      }
+      this.$refs.VideoPlayer.play()
+    }
+  },
+  mounted() {
+    if (isStreaming(this.channel)) {
+      this.prepareVideoPlayer()
     }
   },
   methods: {
     ...mapActions('channel', ['setSelected']),
-    isVideo,
+    isStreaming,
+    prepareVideoPlayer() {
+      let hls = new Hls()
+      hls.loadSource(this.channel.link)
+      if (this.$refs.VideoPlayer) {
+        hls.attachMedia(this.$refs.VideoPlayer)
+      }
+    },
     action() {
       return false
     }

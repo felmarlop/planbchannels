@@ -3926,7 +3926,7 @@ highlight.js@^10.7.1:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.3.tgz#697272e3991356e40c3cac566a74eef681756531"
   integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
 
-hls.js@^1.4.3:
+hls.js@^1.5.7:
   version "1.5.7"
   resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.7.tgz#e069e78fe962a422d16aa17a2bfc2f1e2321089d"
   integrity sha512-Hnyf7ojTBtXHeOW1/t6wCBJSiK1WpoKF9yg7juxldDx8u3iswrkPt2wbOA/1NiwU4j27DSIVoIEJRAhcdMef/A==
@@ -6949,13 +6949,6 @@ vue-eslint-parser@^9.0.1:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
-
-vue-hls-video-player@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/vue-hls-video-player/-/vue-hls-video-player-1.0.1.tgz#6a484a2ed9ccf16953b5fadaee52dbc280703f76"
-  integrity sha512-zG+L71Jidc1zqc6+8OdM8SaRIhdTaIKcM0QFEdTX7gHWIzUKBzgACeHE4fjPy5rUvGL6A3JzVfUEeZVw5DpbDA==
-  dependencies:
-    hls.js "^1.4.3"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
