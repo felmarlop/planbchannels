@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <v-app-bar app flat height="80" elevation="5" style="background: rgba(0, 0, 0, 0.7)">
+    <v-app-bar app flat height="80px" elevation="5" style="background: rgba(0, 0, 0, 0.7)">
       <v-row>
-        <v-col cols="2">
-          <v-img :src="Logo" max-width="45" style="cursor: pointer" @click="drawer = !drawer" />
+        <v-col cols="2" class="py-5 pb-0">
+          <v-img :src="Logo" max-width="50" style="cursor: pointer" @click="drawer = !drawer" />
         </v-col>
         <v-spacer />
-        <v-col cols="10" sm="6">
+        <v-col cols="10" sm="6" class="py-5 pb-0">
           <v-text-field
             :value="search"
             :loading="searching"
@@ -15,7 +15,7 @@
             prepend-inner-icon="mdi-magnify"
             class="rounded-lg"
             label="Buscar"
-            :hint="list.length ? `${list.length} canales/vídeos` : ''"
+            :hint="list.length ? `${list.length} canales/vídeos` : 'No hay canales'"
             persistent-hint
             dense
             outlined
