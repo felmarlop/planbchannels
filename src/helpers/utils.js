@@ -4,7 +4,7 @@ import axios from 'axios'
 export function isVideo(channel) {
   return ['.mkv', '.mp4'].some(f => channel.link.includes(f))
 }
-// Get channels of a M3U file
+// Get channels from a file
 export function getFileData(f, cb) {
   if (!f) {
     return cb([])
@@ -33,50 +33,58 @@ export function getURLData(uri, cb) {
 function _getChannelsFromText(text) {
   const lines = text.split('\n')
   const len = lines.length
+  let line = null
   let link = null
-  let group = null
-  let img = null
-  let name = null
   let channels = []
   for (var i = 0; i < len; i++) {
-    if (lines[i].includes('#EXTINF') && i != len - 1) {
+    line = lines[i]
+    if (line.includes('#EXTINF') && i != len - 1) {
       link = lines[i + 1]
     } else {
       continue
     }
-    // Get name
-    name = lines[i].split(',')
-    if (name.length > 1) {
-      name = name[name.length - 1]
-    } else {
-      name = 'Nombre no disponible'
-    }
-    // Get img
-    img = lines[i].split('logo="')
-    if (img.length > 1) {
-      img = img[1].split('"')[0]
-    } else {
-      img = null
-    }
-    // Get group
-    group = lines[i].split('group-title="')
-    if (group.length > 1) {
-      group = group[1].split('"')[0].split(';')[0]
-      if (['undefined', 'not defined'].indexOf(group.toLowerCase()) >= 0) {
-        group = 'Otros'
-      }
-    } else {
-      group = 'Otros'
-    }
     channels.push({
-      group: group,
-      img: img,
+      group: _getGroupFromLine(line),
+      img: _getImageLinkFromLine(line),
       link: link,
-      name: name
+      name: _getNameFromLine(line)
     })
   }
   channels.sort((a, b) => {
     return a.name < b.name
   })
   return channels
+}
+
+function _getNameFromLine(line) {
+  let splits = line.split(',')
+  if (splits.length > 1) {
+    return splits[splits.length - 1]
+  } 
+  splits = line.split('tvg-name="')
+  if (splits.length > 1) {
+    return splits[1].split('"')[0]
+  }
+  return 'Nombre no disponible'
+}
+
+function _getImageLinkFromLine(line) {
+  let splits = line.split('logo="')
+  if (splits.length > 1) {
+    return splits[1].split('"')[0]
+  }
+  return null
+}
+
+function _getGroupFromLine(line) {
+  let splits = line.split('group-title="')
+  if (splits.length > 1) {
+    splits = splits[1].split('"')[0].split(';')[0]
+    if (['undefined', 'not defined'].indexOf(splits.toLowerCase()) >= 0) {
+      return 'Otros'
+    }
+    return splits
+  } else {
+    return 'Otros'
+  }
 }
