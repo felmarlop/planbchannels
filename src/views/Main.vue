@@ -12,7 +12,7 @@
           :channels="filteredChannels"
           :group="g"
           :all="selectedGroup != null"
-          @more="setGroup($event || null)"
+          @setGroup="setGroup($event || null)"
           @select="setSelected($event)"
         />
       </v-col>

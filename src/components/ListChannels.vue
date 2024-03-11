@@ -20,19 +20,17 @@
         <v-list-item-subtitle class="text--disabled">{{ c.group }}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <v-row v-if="!all">
+    <v-row v-if="groupChannels.length > CHANNEL_LIMIT && !all">
       <v-col cols="12">
-        <v-btn rounded width="100%" @click="openGroup(group)">
+        <v-btn rounded width="100%" @click="$emit('setGroup', group)">
           <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
-          <span class="text-caption">Ver todos</span>
+          <span class="text-caption">Ver más</span>
         </v-btn>
       </v-col>
     </v-row>
   </v-list>
 </template>
 <script>
-import { mapActions } from 'vuex'
-
 import LogoBg from '@/assets/img/logo-bg.png'
 
 const CHANNEL_LIMIT = 3
@@ -76,13 +74,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('channel', ['setGroup', 'setSearch']),
     getImage(c) {
       return c.img || LogoBg
-    },
-    openGroup(g) {
-      this.setSearch('')
-      this.setGroup(g)
     }
   }
 }

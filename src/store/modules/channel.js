@@ -10,7 +10,7 @@ const INIT_STATE = {
 export default {
   namespaced: true,
   state: {
-    url: 'https://gist.githubusercontent.com/felmarlop/ec1730e5cd595b3dbae7a6f8d1b93b28/raw/3b88145d48dccc9064738d87aa7995003dd4bf81/m3u',
+    url: 'https://gist.githubusercontent.com/felmarlop/ec1730e5cd595b3dbae7a6f8d1b93b28/raw/801a30e2a6e31b4ea1968806ce7d57b30c8a4fca/m3u',
     ...INIT_STATE
   },
   getters: {
