@@ -1,30 +1,31 @@
 <template>
   <v-col cols="12" md="6">
     <v-card color="secondary">
-      <v-card-text class="d-flex">
-        <v-row>
+      <v-card-text>
+        <v-row v-if="loading">
+          <v-col cols="12" class="text-center">
+            <div class="my-5">Cargando canales...</div>
+            <v-progress-circular color="tertiary" indeterminate />
+          </v-col>
+        </v-row>
+        <v-row class="d-flex" v-else>
           <v-col cols="12" class="pt-2 pb-0">Opción 1:</v-col>
           <v-col cols="12" class="d-flex pb-0">
             <v-text-field v-model="uri" color="tertiary" label="URL" class="mr-1" dense outlined clearable />
-            <v-btn
-              outlined
-              height="40px"
-              color="tertiary"
-              :loading="loading"
-              :disabled="!validURL"
-              @click="handleURL(uri)"
-            >
+            <v-btn outlined height="40px" color="tertiary" :disabled="!validURL" @click="handleURL(uri)">
               <v-icon>mdi-cloud-download</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" class="pt-0 pb-3">Opción 2:</v-col>
           <v-col cols="12" class="pt-0">
             <input ref="up" type="file" style="display: none" @change="handleFile" />
-            <v-btn outlined dense :loading="loading" width="100%" color="tertiary" @click="$refs.up.click()">
+            <v-btn outlined dense width="100%" color="tertiary" @click="$refs.up.click()">
               <v-icon class="mr-2">mdi-file-upload</v-icon>
               <span>Subir playlist</span>
             </v-btn>
           </v-col>
+        </v-row>
+        <v-row>
           <v-col cols="12" class="text-center pt-5">
             <p width="100%">
               Plan B Channels sólo descarga y reproduce el contenido de tu playlist. No hace peticiones a ningún

@@ -1,8 +1,8 @@
 <template>
   <Transition name="fade">
-    <div class="alert-message text-body-1 d-flex" v-if="message">
-      <v-icon class="mr-2 mb-2">mdi-alert</v-icon>
-      <p class="mb-4 mt-2">{{ message }}</p>
+    <div class="alert-message text-body-1 font-weight-bold d-flex" v-if="message">
+      <v-icon class="mr-2">mdi-alert</v-icon>
+      <p class="my-2">{{ message }}</p>
     </div>
   </Transition>
 </template>
@@ -17,13 +17,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 div.alert-message {
-  position: absolute;
-  top: 80px;
-  left: 2%;
+  position: fixed;
+  top: 15px;
+  left: 1%;
   z-index: 10;
-  width: 96%;
-  padding: 10px 10px 0 10px;
-  background: rgba(255, 204, 0, 0.7);
+  width: 98%;
+  padding: 5px 15px 5px 15px;
+  background: rgb(255, 204, 0);
   border-radius: 10px;
 }
 video {
