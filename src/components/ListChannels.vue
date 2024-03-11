@@ -2,12 +2,12 @@
   <v-list color="primary" lines="three" class="px-0">
     <v-list-item
       :key="`${index}-${c.link}`"
-      class="channel mb-3 rounded-lg"
+      class="channel mb-3 rounded-lg pl-0"
       @click="$emit('select', c)"
       v-for="(c, index) in chunk"
     >
-      <v-list-item-avatar :size="$vuetify.breakpoint.xs ? 50 : 100">
-        <v-img :src="getImage(c)" contain position="center">
+      <v-list-item-avatar :size="80" rounded="0" class="my-1 ml-2 mr-5">
+        <v-img :src="getImage(c)" position="center" contain>
           <template #placeholder>
             <div class="d-flex align-center justify-center fill-height">
               <v-progress-circular color="tertiary" indeterminate />
@@ -76,6 +76,14 @@ export default {
   methods: {
     getImage(c) {
       return c.img || LogoBg
+    },
+    getBackgroundStyle(c) {
+      return (
+        `background: url(${this.getImage(c)});` +
+        'background-repeat: no-repeat;' +
+        'background-size: 100%;' +
+        'background-position: center'
+      )
     }
   }
 }

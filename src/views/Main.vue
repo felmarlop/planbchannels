@@ -1,13 +1,9 @@
 <template>
-  <v-container fluid>
-    <v-row v-if="selectedChannel">
-      <v-col cols="12">
-        <pb-player :channel="selectedChannel" />
-      </v-col>
-    </v-row>
-    <v-row justify="center" v-else>
-      <v-col :key="g" cols="12" class="py-0" v-for="g in sortedGroupNames">
-        <list-channels-title :group="g" :count="groups[g]" />
+  <v-container class="pt-5" fluid>
+    <pb-player :channel="selectedChannel" v-if="selectedChannel" />
+    <v-row justify="center" v-else-if="channels.length">
+      <v-col :key="g" cols="12" class="pb-2" v-for="g in sortedGroupNames">
+        <list-channels-group :group="g" :count="groups[g]" />
         <list-channels
           :channels="filteredChannels"
           :group="g"
@@ -16,12 +12,14 @@
           @select="setSelected($event)"
         />
       </v-col>
-      <load-channels v-if="!channels.length" />
-      <v-col cols="12" class="text-center pt-16" v-else-if="!sortedGroupNames.length">
+      <v-col cols="12" class="text-center pt-16" v-if="!sortedGroupNames.length">
         <span class="text-body-1 text-uppercase text--disabled">
           {{ notFoundMessage }}
         </span>
       </v-col>
+    </v-row>
+    <v-row justify="center" v-else>
+      <load-channels />
     </v-row>
   </v-container>
 </template>
@@ -29,11 +27,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
-import { ListChannels, ListChannelsTitle, LoadChannels, PbPlayer } from '@/components'
+import { ListChannels, ListChannelsGroup, LoadChannels, PbPlayer } from '@/components'
 
 export default {
   name: 'MainView',
-  components: { ListChannels, ListChannelsTitle, LoadChannels, PbPlayer },
+  components: { ListChannels, ListChannelsGroup, LoadChannels, PbPlayer },
   computed: {
     ...mapGetters('channel', {
       url: 'url',

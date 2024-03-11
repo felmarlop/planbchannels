@@ -2,8 +2,14 @@
   <v-container>
     <v-app-bar app flat height="80px" elevation="5" style="background: rgba(0, 0, 0, 0.7)">
       <v-row>
-        <v-col cols="2" class="py-5 pb-0">
-          <v-img :src="Logo" max-width="50" style="cursor: pointer" @click="drawer = !drawer" />
+        <v-col cols="2" class="py-6 pb-0">
+          <v-img :src="Logo" max-width="50" style="cursor: pointer" @click="drawer = !drawer">
+            <template #placeholder>
+              <div class="d-flex align-center justify-center fill-height">
+                <v-progress-circular color="tertiary" indeterminate />
+              </div>
+            </template>
+          </v-img>
         </v-col>
         <v-spacer />
         <v-col cols="10" sm="6" class="py-5 pb-0">
@@ -40,8 +46,8 @@
           <v-divider />
         </v-col>
         <v-col cols="12" class="text-uppercase text-caption py-0">
-          <v-list two-line>
-            <v-list-item class="pl-10" @click="emptyList()">
+          <v-list>
+            <v-list-item class="pl-10" :class="list.length ? '' : 'v-list-item--active'" @click="emptyList()">
               <v-icon color="tertiary" class="mr-5">mdi-playlist-plus</v-icon>
               <v-list-item-title>Nueva playlist</v-list-item-title>
             </v-list-item>
@@ -62,7 +68,6 @@ export default {
   name: 'PbHeader',
   data: () => ({
     drawer: null,
-    view: null,
     Logo,
     LogoTitle
   }),

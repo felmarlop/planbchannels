@@ -1,19 +1,20 @@
 <template>
-  <v-toolbar color="transparent" class="pr-2">
-    <v-toolbar-title class="text-h6 font-weight-bold pr-2">
+  <v-row>
+    <v-col cols="10" class="text-h6">
       {{ `${group} (${count})` }}
-    </v-toolbar-title>
-    <v-spacer />
-    <v-btn icon small color="tertiary" :outlined="!selectedGroup" @click="setGroup(null)" v-if="selectedGroup">
-      <v-icon>{{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}</v-icon>
-    </v-btn>
-  </v-toolbar>
+    </v-col>
+    <v-col cols="2" class="text-right">
+      <v-btn icon small color="tertiary" :outlined="!selectedGroup" @click="setGroup(null)" v-if="selectedGroup">
+        <v-icon>{{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}</v-icon>
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'ListChannelsTitle',
+  name: 'ListChannelsGroup',
   props: {
     group: {
       type: String,
