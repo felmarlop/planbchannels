@@ -65,6 +65,9 @@ export default {
       this.error = false
     }
   },
+  created() {
+    this.$vuetify.goTo(0, { duration: 0 })
+  },
   methods: {
     ...mapActions('channel', ['setSelected']),
     isStreaming
