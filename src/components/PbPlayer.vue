@@ -48,8 +48,9 @@ export default {
       return {
         autoplay: true,
         controls: true,
-        textTrackSettings: false,
+        errorDisplay: false,
         poster: this.previewImg,
+        textTrackSettings: false,
         sources: [
           {
             src: this.channel.link,

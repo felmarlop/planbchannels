@@ -1,8 +1,8 @@
 <template>
-  <Transition name="fade">
-    <div class="alert-message text-body-1 font-weight-bold d-flex" v-if="message">
-      <v-icon class="mr-2">mdi-alert</v-icon>
-      <p class="my-2">{{ message }}</p>
+  <Transition name="fade" class="text-center">
+    <div class="alert-message text-body-1 text-center" v-if="message">
+      <v-icon class="mr-2" color="warning">mdi-alert</v-icon>
+      <p class="my-2" color="warning">{{ message }}</p>
     </div>
   </Transition>
 </template>
@@ -23,8 +23,12 @@ div.alert-message {
   z-index: 10;
   width: 98%;
   padding: 5px 15px 5px 15px;
-  background: rgb(255, 204, 0);
+  color: rgb(255, 204, 0) !important;
+  background: rgba(0, 0, 0, 0.9);
   border-radius: 10px;
+  .v-icon {
+    color: rgb(255, 204, 0) !important;
+  }
 }
 video {
   min-height: 300px;
