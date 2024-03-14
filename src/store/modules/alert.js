@@ -1,5 +1,6 @@
 const INIT_STATE = {
-  message: ''
+  message: '',
+  timeout: null
 }
 
 export default {
@@ -25,8 +26,9 @@ export default {
       Object.assign(state, INIT_STATE)
     },
     setMessage(state, value) {
+      clearTimeout(state.timeout)
       state.message = value
-      setTimeout(() => {
+      state.timeout = setTimeout(() => {
         state.message = ''
       }, 4000)
     }

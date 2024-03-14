@@ -1,9 +1,10 @@
 <template>
   <v-col cols="12" md="6">
     <v-card color="secondary">
+      <v-card-title>Nueva playlist</v-card-title>
       <v-card-text>
         <v-row v-if="loading">
-          <v-col cols="12" class="text-center">
+          <v-col cols="12" class="text-center py-10">
             <div class="my-5">Cargando canales...</div>
             <v-progress-circular color="tertiary" indeterminate />
           </v-col>
@@ -31,15 +32,15 @@
             <input ref="up" type="file" style="display: none" @change="handleFile" />
             <v-btn outlined dense width="100%" color="tertiary" @click="$refs.up.click()">
               <v-icon class="mr-2">mdi-file-upload</v-icon>
-              <span>Subir playlist</span>
+              <span>Cargar</span>
             </v-btn>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="12" class="text-center pt-5">
             <p width="100%">
-              Plan B Channels sólo descarga y reproduce el contenido de tu playlist. No hace peticiones a ningún
-              servidor ni guarda información sobre la lista de canales.
+              Plan B Channels sólo extrae y reproduce el contenido de tu playlist. No hace peticiones a ningún servidor
+              ni guarda información sobre la lista de canales.
             </p>
           </v-col>
         </v-row>
@@ -57,7 +58,9 @@ export default {
   data() {
     return {
       uri: '',
-      errorMessage: 'Ups! No se encontró ningún canal.'
+      noChannelsMessage: 'Ups! no se encontró ningún canal.',
+      errorURLMessage: 'Ups! hubo un problema al extraer los canales, compruebe la URL.',
+      errorFileMessage: 'Ups! hubo un problema al extraer los canales, error en el fichero M3U.'
     }
   },
   computed: {
@@ -76,25 +79,27 @@ export default {
     handleURL(u) {
       this.setUrl(u)
       this.setLoading(true)
-      getURLData(this.url, chs => {
-        this.setLoading(false)
-        if (chs.length) {
-          this.setList(chs)
-        } else {
-          this.setMessage(this.errorMessage)
-        }
-      })
+      getURLData(this.url, this.cb, this.urlError)
     },
     handleFile(e) {
       this.setLoading(true)
-      getFileData(e.target.files[0], chs => {
-        this.setLoading(false)
-        if (chs.length) {
-          this.setList(chs)
-        } else {
-          this.setMessage(this.errorMessage)
-        }
-      })
+      getFileData(e.target.files[0], this.cb, this.fileError)
+    },
+    cb(chs) {
+      if (chs.length) {
+        this.setList(chs)
+      } else {
+        this.setMessage(this.noChannelsMessage)
+      }
+      this.setLoading(false)
+    },
+    urlError() {
+      this.setMessage(this.errorURLMessage)
+      this.setLoading(false)
+    },
+    fileError() {
+      this.setMessage(this.errorFileMessage)
+      this.setLoading(false)
     }
   }
 }

@@ -5,9 +5,9 @@ export function isStreaming(channel) {
   return !['.avi', '.mkv', '.mp4', '.mpeg', '.ogv', '.webm', '.3gp', '.3g2'].some(f => channel.link.includes(f))
 }
 // Get channels from a file
-export function getFileData(f, cb) {
+export function getFileData(f, cb, err) {
   if (!f) {
-    return cb([])
+    return err()
   }
   const reader = new FileReader()
   reader.onload = e => {
@@ -16,7 +16,7 @@ export function getFileData(f, cb) {
   reader.readAsText(f)
 }
 // Retrieve channels from a M3U url
-export function getURLData(uri, cb) {
+export function getURLData(uri, cb, err) {
   if (!uri) {
     return cb([])
   }
@@ -26,7 +26,7 @@ export function getURLData(uri, cb) {
       cb(_getChannelsFromText(r.data || ''))
     })
     .catch(() => {
-      cb([])
+      err()
     })
 }
 

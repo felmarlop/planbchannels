@@ -1,39 +1,31 @@
 <template>
-  <v-list color="primary" lines="three" class="px-0">
-    <v-list-item
-      :key="`${index}-${c.link}`"
-      class="channel mb-3 rounded-lg pl-0"
-      @click="$emit('select', c)"
-      v-for="(c, index) in chunk"
-    >
-      <v-list-item-avatar :size="80" rounded="0" class="my-1 ml-2 mr-5">
-        <v-img :src="getImage(c)" position="center" contain>
-          <template #placeholder>
-            <div class="d-flex align-center justify-center fill-height">
-              <v-progress-circular color="tertiary" indeterminate />
-            </div>
-          </template>
-        </v-img>
-      </v-list-item-avatar>
-      <v-list-item-content class="text-truncate text-right">
-        <v-list-item-title class="mb-2 text-body-1">{{ c.name }}</v-list-item-title>
-        <v-list-item-subtitle class="text--disabled">{{ c.group }}</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-    <v-row v-if="groupChannels.length > CHANNEL_LIMIT && !all">
-      <v-col cols="12">
-        <v-btn rounded width="100%" @click="$emit('setGroup', group)">
-          <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
-          <span class="text-caption">Ver más</span>
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-list>
+  <v-row class="mb-5 channel">
+    <v-col :key="`${index}-${c.link}`" cols="6" md="3" v-for="(c, index) in chunk">
+      <v-card
+        class="d-flex flex-column"
+        :height="$vuetify.breakpoint.xsOnly ? '140' : '200'"
+        :style="getCardStyle(c)"
+        @click="$emit('select', c)"
+      >
+        <v-spacer />
+        <v-card-title class="pt-0 pb-2 px-0">
+          <v-col cols="12" class="text-body-1 py-0 text-truncate">{{ c.name }}</v-col>
+          <v-col cols="12" class="text--disabled text-body-2 py-0 text-truncate">{{ c.group }}</v-col>
+        </v-card-title>
+      </v-card>
+    </v-col>
+    <v-col cols="12" v-if="groupChannels.length > CHANNEL_LIMIT && !all">
+      <v-btn rounded width="100%" @click="$emit('setGroup', group)">
+        <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
+        <span class="text-caption">Ver más</span>
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
 <script>
 import LogoBg from '@/assets/img/logo-bg.png'
 
-const CHANNEL_LIMIT = 3
+const CHANNEL_LIMIT = 4
 
 export default {
   name: 'ListChannels',
@@ -55,7 +47,9 @@ export default {
     }
   },
   data() {
-    return { CHANNEL_LIMIT }
+    return {
+      CHANNEL_LIMIT
+    }
   },
   computed: {
     groupChannels() {
@@ -77,22 +71,18 @@ export default {
     getImage(c) {
       return c.img || LogoBg
     },
-    getBackgroundStyle(c) {
+    getCardStyle(c) {
       return (
-        `background: url(${this.getImage(c)});` +
+        'border-bottom: 1px solid;' +
+        'border-right: 1px solid;' +
+        'border-radius: 0 0 10px 0;' +
+        'border-color: #01939e;' +
+        `background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url(${this.getImage(c)});` +
         'background-repeat: no-repeat;' +
-        'background-size: 100%;' +
-        'background-position: center'
+        'background-size: contain;' +
+        'background-position: center;'
       )
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-div.v-list-item.channel {
-  border: 1px solid;
-  border-left: none;
-  border-top: none;
-  border-color: rgb(0, 96, 102);
-}
-</style>

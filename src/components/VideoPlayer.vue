@@ -3,7 +3,7 @@
     <video
       ref="videoPlayer"
       class="video-js vjs-default-skin vjs-16-9"
-      @error="setMessage('Ups! Vídeo no disponible. Error de conexión o formato no soportado.')"
+      @error="setMessage('Ups! vídeo no disponible. Error de conexión o formato no soportado.')"
     ></video>
   </div>
 </template>

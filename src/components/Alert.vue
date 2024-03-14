@@ -17,14 +17,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 div.alert-message {
-  position: fixed;
+  position: absolute;
   top: 15px;
   left: 1%;
   z-index: 10;
   width: 98%;
   padding: 5px 15px 5px 15px;
   color: rgb(255, 204, 0) !important;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   .v-icon {
     color: rgb(255, 204, 0) !important;

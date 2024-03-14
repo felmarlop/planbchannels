@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pt-5" fluid>
+  <v-container class="py-5 px-5" fluid>
     <pb-player :channel="selectedChannel" v-if="selectedChannel" />
     <v-row justify="center" v-else-if="channels.length">
       <v-col :key="g" cols="12" class="pb-2" v-for="g in sortedGroupNames">
