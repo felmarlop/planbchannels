@@ -1,7 +1,6 @@
 <template>
-  <div class="floating-social-menu d-flex text-body-2" @click="top()" v-if="scrollY > 300">
-    <v-icon color="tertiary" class="mt-n2 mr-1">mdi-arrow-up</v-icon>
-    <span>Volver arriba</span>
+  <div class="floating-social-menu d-flex" @click="top()" v-if="scrollY > 300">
+    <v-icon large color="tertiary" class="mt-n2 mr-1">mdi-chevron-up</v-icon>
   </div>
 </template>
 <script>
@@ -31,16 +30,15 @@ export default {
 .floating-social-menu {
   color: #00eeff;
   position: fixed;
-  bottom: 7%;
+  bottom: 5%;
   right: 0;
-  z-index: 10;
-  width: 130px;
+  z-index: 5;
+  width: 60px;
   height: 40px;
   padding-top: 10px;
-  padding-left: 5px;
-  background: rgba(0, 0, 0, 0.6);
+  padding-left: 10px;
+  background: rgba(0, 0, 0, 0.8);
   border-radius: 10px 0 0 10px;
-  border-bottom: 1px solid;
   cursor: pointer;
 }
 </style>

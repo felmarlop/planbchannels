@@ -1,7 +1,9 @@
 <template>
-  <v-row class="mb-5 channel">
+  <v-row class="channel">
     <v-col :key="`${index}-${c.link}`" cols="6" md="3" v-for="(c, index) in chunk">
       <v-card
+        rounded
+        elevation="0"
         class="d-flex flex-column"
         :height="$vuetify.breakpoint.xsOnly ? '140' : '200'"
         :style="getCardStyle(c)"
@@ -9,13 +11,12 @@
       >
         <v-spacer />
         <v-card-title class="pt-0 pb-2 px-0">
-          <v-col cols="12" class="two-lines text-body-1 py-0 px-2 nowrap">{{ c.name }}</v-col>
-          <v-col class="text--disabled text-body-2 py-0 px-2 text-truncate">{{ c.group }}</v-col>
+          <v-col cols="12" class="two-lines text-body-2 font-weight-bold py-0 nowrap">{{ c[0] }}</v-col>
         </v-card-title>
       </v-card>
     </v-col>
-    <v-col cols="12" v-if="groupChannels.length > CHANNEL_LIMIT && !all">
-      <v-btn rounded width="100%" @click="$emit('setGroup', group)">
+    <v-col cols="12" v-if="seeMore">
+      <v-btn rounded text outlined width="100%" color="tertiary" @click="$emit('setGroup', group)">
         <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
         <span class="text-caption">Ver más</span>
       </v-btn>
@@ -24,8 +25,7 @@
 </template>
 <script>
 import LogoBg from '@/assets/img/logo-bg.png'
-
-const CHANNEL_LIMIT = 4
+import { CHANNEL_LIMIT, PREVIEW_CHANNEL_LIMIT } from '@/config'
 
 export default {
   name: 'ListChannels',
@@ -37,64 +37,47 @@ export default {
     },
     group: {
       type: String,
-      required: false,
+      required: true,
       default: ''
-    },
-    all: {
-      type: Boolean,
-      required: false,
-      default: false
     }
   },
   data() {
-    return {
-      CHANNEL_LIMIT
-    }
+    return { PREVIEW_CHANNEL_LIMIT }
   },
   computed: {
     groupChannels() {
       if (this.group) {
         return this.channels.filter(c => {
-          return c.group == this.group
+          return c[1] == this.group
         })
       }
-      return this.channels
+      return []
     },
     chunk() {
-      if (this.all) {
-        return this.groupChannels
+      if (this.group) {
+        return this.groupChannels.slice(0, PREVIEW_CHANNEL_LIMIT)
       }
-      return this.groupChannels.slice(0, CHANNEL_LIMIT)
+      return this.channels.slice(0, CHANNEL_LIMIT)
+    },
+    seeMore() {
+      return this.groupChannels.length > PREVIEW_CHANNEL_LIMIT
     }
   },
   methods: {
     getImage(c) {
-      return c.img || LogoBg
+      return c[2] || LogoBg
     },
     getCardStyle(c) {
       return (
-        'border-bottom: 1px solid;' +
-        'border-right: 1px solid;' +
-        'border-radius: 0 0 10px 0;' +
-        'border-color: #01939e;' +
         `background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url(${this.getImage(c)});` +
         'background-repeat: no-repeat;' +
         'background-size: contain;' +
-        'background-position: center;'
+        'background-position: center;' +
+        'border-bottom: 1px solid;' +
+        'border-right: 1px solid;' +
+        'border-color: #00eeff'
       )
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-.two-lines {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-</style>

@@ -1,10 +1,10 @@
 <template>
   <v-row>
-    <v-col cols="10" class="text-h6">
-      {{ `${group} (${count})` }}
+    <v-col :cols="selectedGroup ? 10 : 12" class="text-h6 two-lines py-2">
+      {{ `${group}` }}
     </v-col>
-    <v-col cols="2" class="text-right">
-      <v-btn icon small color="tertiary" :outlined="!selectedGroup" @click="setGroup(null)" v-if="selectedGroup">
+    <v-col cols="2" class="text-right py-1">
+      <v-btn icon outlined small text color="tertiary" @click="setGroup(null)" v-if="selectedGroup">
         <v-icon>{{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}</v-icon>
       </v-btn>
     </v-col>
@@ -19,11 +19,6 @@ export default {
     group: {
       type: String,
       required: true
-    },
-    count: {
-      type: Number,
-      required: false,
-      default: 0
     }
   },
   computed: {

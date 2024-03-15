@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Check if the URL is a video with the following formats
 export function isStreaming(channel) {
-  return !['.avi', '.mkv', '.mp4', '.mpeg', '.ogv', '.webm', '.3gp', '.3g2'].some(f => channel.link.includes(f))
+  return !['.avi', '.mkv', '.mp4', '.mpeg', '.ogv', '.webm', '.3gp', '.3g2'].some(f => channel[3].includes(f))
 }
 // Get channels from a file
 export function getFileData(f, cb, err) {
@@ -11,7 +11,7 @@ export function getFileData(f, cb, err) {
   }
   const reader = new FileReader()
   reader.onload = e => {
-    return cb(_getChannelsFromText(e.target.result))
+    return cb(_getChannelsAndGroups(e.target.result))
   }
   reader.readAsText(f)
 }
@@ -23,14 +23,14 @@ export function getURLData(uri, cb, err) {
   axios
     .get(uri)
     .then(r => {
-      cb(_getChannelsFromText(r.data || ''))
+      cb(_getChannelsAndGroups(r.data || ''))
     })
     .catch(() => {
       err()
     })
 }
 
-function _getChannelsFromText(text) {
+function _getChannelsAndGroups(text) {
   const lines = text.split('\n')
   const len = lines.length
   let line = null
@@ -44,19 +44,12 @@ function _getChannelsFromText(text) {
       continue
     }
     try {
-      channels.push({
-        group: _getGroupFromLine(line),
-        img: _getImageLinkFromLine(line),
-        link: link,
-        name: _getNameFromLine(line)
-      })
+      // Format: name | group | img | link
+      channels.push([_getNameFromLine(line), _getGroupFromLine(line), _getImageLinkFromLine(line), link])
     } catch {
       continue
     }
   }
-  channels.sort((a, b) => {
-    return a.name < b.name
-  })
   return channels
 }
 

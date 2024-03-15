@@ -1,16 +1,12 @@
 <template>
   <v-row>
-    <v-col cols="10" class="text-h6">
-      {{ channelName }}
-      <div class="text-body-1 text-truncate font-weight-regular text--disabled">
-        {{ channel.group }}
-      </div>
-    </v-col>
-    <v-col cols="2" class="text-right">
+    <v-col cols="10" class="text-h6 pb-0 two-lines">{{ channel[0] }}</v-col>
+    <v-col cols="2" class="text-right pb-0">
       <v-btn icon color="tertiary" @click="setSelected(null)">
         <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>
     </v-col>
+    <v-col cols="10" class="text--disabled text-body-1 py-0 font-weight-regular text-truncate">{{ channel[1] }}</v-col>
     <v-col cols="12">
       <video-player :options="videoOptions" />
     </v-col>
@@ -29,7 +25,7 @@ export default {
   components: { VideoPlayer },
   props: {
     channel: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
@@ -38,11 +34,8 @@ export default {
   }),
   computed: {
     ...mapGetters('alert', ['message']),
-    channelName() {
-      return this.channel.name || 'Nombre no disponible'
-    },
     previewImg() {
-      return this.channel.img || LogoBg
+      return this.channel[2] || LogoBg
     },
     videoOptions() {
       return {
@@ -53,7 +46,7 @@ export default {
         textTrackSettings: false,
         sources: [
           {
-            src: this.channel.link,
+            src: this.channel[3],
             type: isStreaming(this.channel) ? 'application/x-mpegURL' : 'video/mp4'
           }
         ]

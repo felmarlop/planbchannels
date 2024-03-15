@@ -1,8 +1,8 @@
 <template>
   <v-app id="app">
+    <Pb-Header v-if="!selected" />
     <alert />
-    <Pb-Header />
-    <v-main color="primary">
+    <v-main color="primary" :class="selected ? 'channel' : ''">
       <router-view />
     </v-main>
     <Pb-Footer />
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import { Alert, PbHeader, PbFooter } from '@/components'
 
 export default {
@@ -18,6 +20,9 @@ export default {
     Alert,
     PbHeader,
     PbFooter
+  },
+  computed: {
+    ...mapGetters('channel', ['selected'])
   }
 }
 </script>

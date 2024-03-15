@@ -6,4 +6,17 @@ body, #app {
   .v-main {
     padding: 60px 0 0 0 !important;
   }
+  .v-main.channel {
+    padding: 0 !important;
+  }
+  .two-lines {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
 }

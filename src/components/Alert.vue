@@ -18,10 +18,10 @@ export default {
 <style lang="scss" scoped>
 div.alert-message {
   position: absolute;
-  top: 15px;
-  left: 1%;
+  top: 90px;
+  left: 5%;
   z-index: 10;
-  width: 98%;
+  width: 90%;
   padding: 5px 15px 5px 15px;
   color: rgb(255, 204, 0) !important;
   background: rgba(0, 0, 0, 0.6);

@@ -5,7 +5,8 @@ const INIT_STATE = {
   loading: false,
   group: null,
   selected: null,
-  scrollY: 0
+  scrollY: 0,
+  groupScrollY: 0
 }
 
 export default {
@@ -36,6 +37,9 @@ export default {
     scrollY({ scrollY }) {
       return scrollY
     },
+    groupScrollY({ groupScrollY }) {
+      return groupScrollY
+    },
     url({ url }) {
       return url
     }
@@ -62,6 +66,9 @@ export default {
     setScrollY({ commit }, value) {
       commit('setScrollY', value)
     },
+    setGroupScrollY({ commit }, value) {
+      commit('setGroupScrollY', value)
+    },
     setGroup({ commit }, value) {
       commit('setGroup', value)
     },
@@ -83,13 +90,16 @@ export default {
       state.searching = value
     },
     setSearch(state, value) {
-      state.search = value
+      state.search = value || ''
     },
     setSelected(state, value) {
       state.selected = value
     },
     setScrollY(state, value) {
       state.scrollY = value
+    },
+    setGroupScrollY(state, value) {
+      state.groupScrollY = value
     },
     setGroup(state, value) {
       state.group = value

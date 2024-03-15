@@ -5,8 +5,8 @@
       <v-card-text>
         <v-row v-if="loading">
           <v-col cols="12" class="text-center py-10">
-            <div class="my-5">Cargando canales...</div>
             <v-progress-circular color="tertiary" indeterminate />
+            <div class="my-5">Cargando canales...</div>
           </v-col>
         </v-row>
         <v-row class="d-flex" v-else>
@@ -23,14 +23,14 @@
               persistent-clear
               hide-details
             />
-            <v-btn outlined height="40px" color="tertiary" :disabled="!validURL" @click="handleURL(uri)">
+            <v-btn outlined text height="40px" color="tertiary" :disabled="!validURL" @click="handleURL(uri)">
               <v-icon>mdi-cloud-download</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="12" class="pb-3 mt-1">Opción 2:</v-col>
           <v-col cols="12" class="pt-0">
             <input ref="up" type="file" style="display: none" @change="handleFile" />
-            <v-btn outlined dense width="100%" color="tertiary" @click="$refs.up.click()">
+            <v-btn outlined dense text width="100%" color="tertiary" @click="$refs.up.click()">
               <v-icon class="mr-2">mdi-file-upload</v-icon>
               <span>Cargar</span>
             </v-btn>
@@ -85,9 +85,9 @@ export default {
       this.setLoading(true)
       getFileData(e.target.files[0], this.cb, this.fileError)
     },
-    cb(chs) {
-      if (chs.length) {
-        this.setList(chs)
+    cb(channels) {
+      if (channels.length) {
+        this.setList(channels)
       } else {
         this.setMessage(this.noChannelsMessage)
       }

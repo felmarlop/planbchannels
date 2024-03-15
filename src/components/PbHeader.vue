@@ -23,6 +23,7 @@
             label="Buscar"
             :hint="list.length ? `${list.length} canales/vídeos` : 'No hay canales'"
             persistent-hint
+            persistent-clear
             dense
             outlined
             clearable
