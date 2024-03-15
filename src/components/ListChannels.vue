@@ -9,8 +9,8 @@
       >
         <v-spacer />
         <v-card-title class="pt-0 pb-2 px-0">
-          <v-col cols="12" class="text-body-1 py-0 text-truncate">{{ c.name }}</v-col>
-          <v-col cols="12" class="text--disabled text-body-2 py-0 text-truncate">{{ c.group }}</v-col>
+          <v-col cols="12" class="two-lines text-body-1 py-0 px-2 nowrap">{{ c.name }}</v-col>
+          <v-col class="text--disabled text-body-2 py-0 px-2 text-truncate">{{ c.group }}</v-col>
         </v-card-title>
       </v-card>
     </v-col>
@@ -86,3 +86,15 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.two-lines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+</style>
