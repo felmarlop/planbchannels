@@ -4,7 +4,8 @@ const INIT_STATE = {
   searching: false,
   loading: false,
   group: null,
-  selected: null
+  selected: null,
+  scrollY: 0
 }
 
 export default {
@@ -32,6 +33,9 @@ export default {
     selected({ selected }) {
       return selected
     },
+    scrollY({ scrollY }) {
+      return scrollY
+    },
     url({ url }) {
       return url
     }
@@ -54,6 +58,9 @@ export default {
     },
     setSelected({ commit }, value) {
       commit('setSelected', value)
+    },
+    setScrollY({ commit }, value) {
+      commit('setScrollY', value)
     },
     setGroup({ commit }, value) {
       commit('setGroup', value)
@@ -80,6 +87,9 @@ export default {
     },
     setSelected(state, value) {
       state.selected = value
+    },
+    setScrollY(state, value) {
+      state.scrollY = value
     },
     setGroup(state, value) {
       state.group = value

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import videojs from 'video.js'
 
 export default {
@@ -27,12 +27,15 @@ export default {
       player: null
     }
   },
+  computed: { ...mapGetters('channel', ['selected']) },
   mounted() {
     const { autoplay, ...opts } = this.options
     this.player = videojs(this.$refs.videoPlayer, opts, () => {
       if (autoplay) {
         setTimeout(() => {
-          this.player.play()
+          if (this.player && this.selected) {
+            this.player.play()
+          }
         }, 1000)
       }
     })

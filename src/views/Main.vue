@@ -21,17 +21,18 @@
     <v-row justify="center" v-else>
       <load-channels />
     </v-row>
+    <go-to-top />
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
-import { ListChannels, ListChannelsGroup, LoadChannels, PbPlayer } from '@/components'
+import { GoToTop, ListChannels, ListChannelsGroup, LoadChannels, PbPlayer } from '@/components'
 
 export default {
   name: 'MainView',
-  components: { ListChannels, ListChannelsGroup, LoadChannels, PbPlayer },
+  components: { GoToTop, ListChannels, ListChannelsGroup, LoadChannels, PbPlayer },
   computed: {
     ...mapGetters('channel', {
       url: 'url',
@@ -39,7 +40,8 @@ export default {
       search: 'search',
       loading: 'loading',
       selectedGroup: 'group',
-      selectedChannel: 'selected'
+      selectedChannel: 'selected',
+      scrollY: 'scrollY'
     }),
     filteredChannels() {
       let chs = this.channels
@@ -75,8 +77,17 @@ export default {
       return this.loading ? 'Cargando canales...' : 'Canal no encontrado'
     }
   },
+  watch: {
+    selectedChannel(v) {
+      if (v) {
+        this.setScrollY(window.scrollY)
+      } else {
+        this.$vuetify.goTo(this.scrollY, { duration: 0 })
+      }
+    }
+  },
   methods: {
-    ...mapActions('channel', ['setSelected', 'setGroup', 'setSearching'])
+    ...mapActions('channel', ['setSelected', 'setScrollY', 'setGroup', 'setSearching'])
   }
 }
 </script>

@@ -1,4 +1,5 @@
 export { default as Alert } from './Alert.vue'
+export { default as GoToTop } from './GoToTop.vue'
 export { default as ListChannels } from './ListChannels.vue'
 export { default as ListChannelsGroup } from './ListChannelsGroup.vue'
 export { default as LoadChannels } from './LoadChannels.vue'
