@@ -18,10 +18,19 @@
         </v-card>
       </v-col>
       <go-to-top v-if="filteredData.groups.length" />
-      <v-col cols="12" class="text-center pt-16" v-else>
-        <span class="text-body-1 text-uppercase text--disabled">
-          {{ notFoundMessage }}
-        </span>
+      <v-col cols="12" class="pb-2" v-else>
+        <v-card color="secondary">
+          <v-card-title v-if="selectedGroup">
+            <list-channels-group :group="selectedGroup" />
+          </v-card-title>
+          <v-card-text>
+            <v-col cols="12" class="text-center py-10">
+              <span class="text-body-1 text-uppercase text--disabled">
+                {{ notFoundMessage }}
+              </span>
+            </v-col>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
     <v-row justify="center" v-else>

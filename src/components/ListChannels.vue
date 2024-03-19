@@ -15,15 +15,17 @@
         </v-card-title>
       </v-card>
     </v-col>
-    <v-col cols="12" v-if="seeMore">
-      <v-btn rounded text outlined width="100%" color="tertiary" @click="$emit('setGroup', group)">
+    <v-col cols="12" v-if="!selectedGroup">
+      <v-btn rounded text outlined width="100%" color="tertiary" @click="openGroup(group)">
         <v-icon color="tertiary" class="mr-1">mdi-plus</v-icon>
-        <span class="text-caption">Ver más</span>
+        <span class="text-caption">Ver todos</span>
       </v-btn>
     </v-col>
   </v-row>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 import LogoBg from '@/assets/img/logo-bg.png'
 import { CHANNEL_LIMIT, PREVIEW_CHANNEL_LIMIT } from '@/config'
 
@@ -41,10 +43,8 @@ export default {
       default: ''
     }
   },
-  data() {
-    return { PREVIEW_CHANNEL_LIMIT }
-  },
   computed: {
+    ...mapGetters('channel', { selectedGroup: 'group' }),
     groupChannels() {
       if (this.group) {
         return this.channels.filter(c => {
@@ -58,12 +58,14 @@ export default {
         return this.groupChannels.slice(0, PREVIEW_CHANNEL_LIMIT)
       }
       return this.channels.slice(0, CHANNEL_LIMIT)
-    },
-    seeMore() {
-      return this.groupChannels.length > PREVIEW_CHANNEL_LIMIT
     }
   },
   methods: {
+    ...mapActions('channel', ['setSearch']),
+    openGroup(g) {
+      this.$emit('setGroup', g)
+      this.setSearch('')
+    },
     getImage(c) {
       return c[2] || LogoBg
     },
