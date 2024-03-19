@@ -17,7 +17,6 @@ import { mapActions, mapGetters } from 'vuex'
 
 import LogoBg from '@/assets/img/logo-bg.png'
 import VideoPlayer from '@/components/VideoPlayer.vue'
-import { isStreaming } from '@/helpers/utils'
 import 'video.js/dist/video-js.css'
 
 export default {
@@ -41,13 +40,12 @@ export default {
       return {
         autoplay: true,
         controls: true,
-        errorDisplay: false,
         poster: this.previewImg,
         textTrackSettings: false,
+        bigPlayButton: false,
         sources: [
           {
-            src: this.channel[3],
-            type: isStreaming(this.channel) ? 'application/x-mpegURL' : 'video/mp4'
+            src: this.channel[3]
           }
         ]
       }
@@ -62,8 +60,7 @@ export default {
     this.$vuetify.goTo(0, { duration: 0 })
   },
   methods: {
-    ...mapActions('channel', ['setSelected']),
-    isStreaming
+    ...mapActions('channel', ['setSelected'])
   }
 }
 </script>

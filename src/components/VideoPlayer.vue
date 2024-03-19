@@ -1,10 +1,6 @@
 <template>
   <div class="text-center">
-    <video
-      ref="videoPlayer"
-      class="video-js vjs-default-skin vjs-16-9"
-      @error="setMessage('Ups! vídeo no disponible. Error de conexión o formato no soportado.')"
-    ></video>
+    <video ref="videoPlayer" class="video-js vjs-default-skin vjs-16-9" />
   </div>
 </template>
 
@@ -39,6 +35,19 @@ export default {
         }, 1000)
       }
     })
+    this.player.error = e => {
+      switch (e?.code) {
+        case 1:
+        case 2:
+        case 3:
+          return false
+        case 4:
+        default:
+          return this.setMessage('Ups! vídeo no disponible. Error de conexión o formato no soportado.')
+        case 5:
+          return this.setMessage('Ups! el vídeo está encriptado y no podemos reproducirlo.')
+      }
+    }
   },
   beforeDestroy() {
     if (this.player) {

@@ -1,9 +1,5 @@
 import axios from 'axios'
 
-// Check if the URL is a video with the following formats
-export function isStreaming(channel) {
-  return !['.avi', '.mkv', '.mp4', '.mpeg', '.ogv', '.webm', '.3gp', '.3g2'].some(f => channel[3].includes(f))
-}
 // Get channels from a file
 export function getFileData(f, cb, err) {
   if (!f) {
