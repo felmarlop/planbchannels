@@ -97,6 +97,7 @@ export default {
       } else {
         this.$vuetify.goTo(this.scrollY, { duration: 0 })
       }
+      this.setMessage('')
     },
     selectedGroup(v) {
       if (v) {
@@ -107,6 +108,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('alert', ['setMessage']),
     ...mapActions('channel', ['setSelected', 'setScrollY', 'setGroupScrollY', 'setGroup', 'setSearching']),
     normalizeStr(s) {
       return s

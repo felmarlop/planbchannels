@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="10" class="text-h6 pb-0 two-lines">{{ channel[0] }}</v-col>
     <v-col cols="2" class="text-right pb-0">
-      <v-btn icon color="tertiary" @click="setSelected(null)">
+      <v-btn icon outlined small text color="tertiary" @click="setSelected(null)">
         <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>
     </v-col>

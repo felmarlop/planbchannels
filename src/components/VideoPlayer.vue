@@ -40,6 +40,7 @@ export default {
         case 1:
         case 2:
         case 3:
+        case undefined:
           return false
         case 4:
         default:
