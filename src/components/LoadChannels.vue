@@ -67,7 +67,7 @@ export default {
     ...mapGetters('channel', ['url', 'list', 'loading']),
     validURL() {
       const r = new RegExp(/^(ftp|http|https):\/\/[^ "]+$/)
-      return r.test(this.uri.toLowerCase())
+      return r.test((this.uri || '').toLowerCase())
     }
   },
   created() {

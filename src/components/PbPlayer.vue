@@ -17,6 +17,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 import LogoBg from '@/assets/img/logo-bg.png'
 import VideoPlayer from '@/components/VideoPlayer.vue'
+import { getMediaType } from '@/helpers/utils'
 import 'video.js/dist/video-js.css'
 
 export default {
@@ -45,7 +46,8 @@ export default {
         bigPlayButton: false,
         sources: [
           {
-            src: this.channel[3]
+            src: this.channel[3],
+            type: getMediaType(this.channel[3])
           }
         ]
       }

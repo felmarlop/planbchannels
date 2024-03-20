@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import videoExtensions from './video-extensions.json'
+
 // Get channels from a file
 export function getFileData(f, cb, err) {
   if (!f) {
@@ -11,6 +13,7 @@ export function getFileData(f, cb, err) {
   }
   reader.readAsText(f)
 }
+
 // Retrieve channels from a M3U url
 export function getURLData(uri, cb, err) {
   if (!uri) {
@@ -24,6 +27,15 @@ export function getURLData(uri, cb, err) {
     .catch(() => {
       err()
     })
+}
+
+// Check video format
+export function getMediaType(link) {
+  return videoExtensions.some(e => {
+    return link.toLowerCase().includes(e)
+  })
+    ? 'video/mp4'
+    : 'application/x-mpegURL'
 }
 
 function _getChannelsAndGroups(text) {
