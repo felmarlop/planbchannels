@@ -101,6 +101,7 @@ export default {
     },
     selectedGroup(v) {
       if (v) {
+        this.setScrollY(window.scrollY + 80)
         this.$vuetify.goTo(0, { duration: 0 })
       } else {
         this.$vuetify.goTo(this.scrollY, { duration: 0 })

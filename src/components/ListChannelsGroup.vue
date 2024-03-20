@@ -1,9 +1,9 @@
 <template>
   <v-row>
-    <v-col :cols="selectedGroup ? 10 : 12" class="text-h6 two-lines py-2">
+    <v-col cols="10" class="text-h6 two-lines">
       {{ `${group}` }}
     </v-col>
-    <v-col cols="2" class="text-right py-1">
+    <v-col cols="2" class="text-right pb-0">
       <v-btn icon outlined small text color="tertiary" @click="setGroup(null)" v-if="selectedGroup">
         <v-icon>{{ selectedGroup ? 'mdi-keyboard-backspace' : 'mdi-plus' }}</v-icon>
       </v-btn>

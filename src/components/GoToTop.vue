@@ -37,7 +37,7 @@ export default {
   height: 40px;
   padding-top: 10px;
   padding-left: 10px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 10px 0 0 10px;
   cursor: pointer;
 }
