@@ -1,6 +1,6 @@
 <template>
   <div class="floating-social-menu d-flex" @click="top()" v-if="scrollY > 300">
-    <v-icon large color="tertiary" class="mt-n2 mr-1">mdi-chevron-up</v-icon>
+    <v-icon color="tertiary" class="mt-n2 mr-1">mdi-chevron-up</v-icon>
   </div>
 </template>
 <script>
@@ -33,7 +33,7 @@ export default {
   bottom: 5%;
   right: 0;
   z-index: 5;
-  width: 60px;
+  width: 50px;
   height: 40px;
   padding-top: 10px;
   padding-left: 10px;

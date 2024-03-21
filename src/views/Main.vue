@@ -3,7 +3,7 @@
     <pb-player :channel="selectedChannel" v-if="selectedChannel" />
     <v-row justify="center" v-else-if="channels.length">
       <v-col :key="g" cols="12" class="pb-2" v-for="g in filteredData.groups">
-        <v-card color="secondary">
+        <v-card>
           <v-card-title>
             <list-channels-group :group="g" />
           </v-card-title>
@@ -19,10 +19,7 @@
       </v-col>
       <go-to-top v-if="filteredData.groups.length" />
       <v-col cols="12" class="pb-2" v-else>
-        <v-card color="secondary">
-          <v-card-title v-if="selectedGroup">
-            <list-channels-group :group="selectedGroup" />
-          </v-card-title>
+        <v-card>
           <v-card-text>
             <v-col cols="12" class="text-center py-10">
               <span class="text-body-1 text-uppercase text--disabled">

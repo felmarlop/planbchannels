@@ -1,7 +1,11 @@
 <template>
   <v-col cols="12" md="6">
-    <v-card color="secondary">
-      <v-card-title>Nueva playlist</v-card-title>
+    <v-card>
+      <v-card-title>
+        <v-row>
+          <v-col class="text-h6">Nueva playlist</v-col>
+        </v-row>
+      </v-card-title>
       <v-card-text>
         <v-row v-if="loading">
           <v-col cols="12" class="text-center py-10">
